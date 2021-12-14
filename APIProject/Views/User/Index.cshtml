@@ -1,0 +1,407 @@
+﻿@using Data.Utils;
+@using Data.DB
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (ViewBag.Role == SystemParam.ROLE_ADMIN)
+    {
+        <div class="row mt-5 card-body" style="background-color:white;border-radius:10px">
+            <div class="col-md-12 sm-12 mt-2 ">
+                <div class="text-dark">
+                    <h4><i class=" mt-1 mb-2"></i> Tài khoản</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 card-body" style="background-color:white;border-radius:10px">
+                <div class="col-md-3 col-sm-6 col-12 mb-1">
+                    <input type="text" class="form-control" id="txtUsername" placeholder="Tên người dùng hoặc số điện thoại "/>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12 mb-1">
+                    <select class="form-control" id="txtStatusUser" onchange="searchUser()">
+                        <option>Trạng thái</option>
+                        <option value="1">Hoạt động</option>
+                        <option value="0">Dừng hoạt động</option>
+                    </select>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12 mb-1">
+                    <select class="form-control" id="txtAddress" onchange="searchUser()">
+                        <option value="" selected>
+                            Tỉnh/ Thành phố
+                        </option>
+                        @foreach (Data.DB.Province obj in (List<Province>)ViewBag.Province)
+                        {
+                            <option value="@obj.Code">
+                                @obj.Name
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3 col-sm-6 col-12 mb-1">
+                    <select class="form-control" id="txtTypeUser" onchange="searchUser()">
+                        <option>Loại tài khoản</option>
+                        <option value="@SystemParam.ROLE_ADMIN">Admin</option>
+                        <option value="@SystemParam.ROLE_USER_POLICY_1">Phòng chính sách 1</option>
+                        <option value="@SystemParam.ROLE_USER_DEPARTMENT">Sở NCC</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 offset-md-6 offset-sm-12 mt-3 mb-3 col-sm-2 ">
+                    <button class="btn btn-outline-success float-right m-2" data-toggle="modal" style="width:110px" data-target="#addUser" onclick="clearData()"><i class="fa fa-plus" aria-hidden="true"></i> Thêm mới</button>
+                    <button class="btn btn-outline-primary float-right m-2" id="btnSearch" style="width:110px;" onclick="searchUser()"><i class="fa fa-search"></i> Tìm kiếm</button>
+                </div>
+        </div>
+        <div class="row card-body mt-2" style="background-color:white;border-radius:10px" id="tableUser">
+
+            @{
+                Html.RenderAction("Search", "User", new { page = 1 });
+            }
+
+        </div>
+
+
+        @* modal Thêm User *@
+<form>
+    <div class="modal fade" id="addUser" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white" style="background-color:#1E8449 ">
+                    <h5 class="modal-title"> <i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp Thêm người dùng</h5>
+                    <button type="button" class="close " style="color:red" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="">
+                    <div class="row mb-3">
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <strong>Tên người dùng</strong>
+                        </div>
+                        <div class="col-md-9 col-xs-12 col-sm-12">
+                            <input type="text" class="form-control" id="username" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <strong>Tài khoản</strong>
+                        </div>
+                        <div class="col-md-9 col-xs-12 col-sm-12">
+                            <input type="text" class="form-control" id="userAccount" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <strong>Email</strong>
+                        </div>
+                        <div class="col-md-9 col-xs-12 col-sm-12">
+                            <input type="text" class="form-control" id="userEmail" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <strong>Phone</strong>
+                        </div>
+                        <div class="col-md-9 col-xs-12 col-sm-12">
+                            <input type="text" class="form-control" id="userPhone" maxlength="10" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <strong>Địa chỉ</strong>
+                        </div>
+                        <div class="col-md-9 col-xs-12 col-sm-12">
+                            <select class="form-control" id="userAddress" >
+                                <option value="" selected disabled>
+                                    Tỉnh/ Thành phố
+                                </option>
+                                @foreach (Data.DB.Province obj in (List<Province>)ViewBag.Province)
+                                {
+                                    <option value="@obj.Code">
+                                        @obj.Name
+                                    </option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <strong>Loại tài khoản</strong>
+                        </div>
+                        <div class="col-md-9 col-xs-12 col-sm-12">
+                            <select class="form-control" id="userType">
+                                <option value="@SystemParam.ROLE_ADMIN">Admin</option>
+                                <option value="@SystemParam.ROLE_USER_POLICY_1">Phòng chính sách 1</option>
+                                <option value="@SystemParam.ROLE_USER_DEPARTMENT">Sở NCC</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <strong>Mật khẩu</strong>
+                        </div>
+                        <div class="col-md-9 col-xs-12 col-sm-12 input-group" id="show_hide_password">
+                            <input class="form-control" type="password" id="txtPasswordCreateUser" placeholder="Mật khẩu !" />
+                            <div class="input-group-addon">
+                                <a href=""><i class="fa fa-eye-slash btn btn-secondary" aria-hidden="true" style="font-size:24px"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <strong>Xác nhận mật khẩu</strong>
+                        </div>
+                        <div class="col-md-9 col-xs-12 col-sm-12 input-group" id="confirmPassword">
+                            <input class="form-control" type="password" id="txtconfirmPasswordCreateUser" placeholder="Xác nhận mật khẩu !" />
+                            <div class="input-group-addon">
+                                <a href=""><i class="fa fa-eye-slash btn btn-secondary" aria-hidden="true" style="font-size:24px"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2 float-right">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="btnadduser" class="btn btn-success" onclick="saveUser()">Thêm mới</button>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+        
+
+        @* Modal sửa User *@
+
+        <div id="modaledituser"></div>
+        <div id="UpdateItem">
+
+        </div>
+
+    }
+    else if (ViewBag.Role == SystemParam.ROLE_USER_POLICY_1 || ViewBag.Role == SystemParam.ROLE_USER_DEPARTMENT)
+    {
+        <div class="row mt-5 card-body" style="background-color:white;border-radius:10px">
+            <div class="col-md-12 sm-12 mt-2 ">
+                <div class="text-dark">
+                    <h4><i class=" mt-1 mb-2"></i> Thông tin tài khoản</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2 card-body" style="background-color:white;border-radius:10px">
+            <table class="table table-borderless">
+                <tbody style="font-size:16px;">
+                    <tr>
+                        <td>Tài khoản: <span style="font-weight:bold; color:red">&nbsp; @ViewBag.UserDetail.UserName</span></td>
+                        <td></td>
+                        <td>Tên tài khoản: <span style="font-weight:bold; color:red">&nbsp; @ViewBag.UserDetail.Account</span></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Địa chỉ: <span style="font-weight:bold; color:red">&nbsp; @ViewBag.UserDetail.Province.Name</span></td>
+                        <td></td>
+                        <td>Email: <span style="font-weight:bold; color:red">&nbsp; @ViewBag.UserDetail.Email</span></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Số điện thoại: <span style="font-weight:bold; color:red">&nbsp; @ViewBag.UserDetail.Phone</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        
+    }
+}
+<script>
+    $("#txtUsername").keypress(function (e) {
+        var key = e.which;
+        if (key == 13) {
+            $("#btnSearch").click();
+        }
+    });
+    
+    $(document).ready(function () {
+        $('#addUser').on('show.bs.modal', function (e) {
+            $("#accountadd").val("");
+            $("#usernameadd").val("");
+
+        })
+
+        $("#btnadduser").click(function () {
+            var username = $("#usernameadd").val();
+            var phone = $("#accountadd").val();
+
+            if (username =="" || phone == "") {
+                swal({
+                    title: "Mời điền đầy đủ thông tin",
+                    icon: "warning"
+                });
+            }
+            //else if (!/^0[1-9]{1}[0-9]{8}$/.test(phone)) {
+            //    swal({
+            //        title: "Số điện thoại không đúng định dạng!",
+            //        icon: "warning"
+            //    });
+            //}
+            else if ($("#userAddress").val == "") {
+                swal("Vui lòng lựa chọn tỉnh thành", "", "warning");
+                return;
+            }
+            else {
+                $.ajax({
+                    url: "/User/AddUser",
+                    type: "POST",
+                    data: {
+
+                        phone: phone,
+                        username: username
+                    },
+                    beforeSend: function () {
+                        $("modalLoad").modal("show");
+                    },
+                    success: function (res) {
+                        $("modalLoad").modal("hide");
+                        if (res == 1) {
+                            $("#addUser").modal("hide");
+                            toastr.success("Thêm người dùng thành công !")
+                            $("#btnSeacrhUser").click();
+                        }
+                        else if (res == 2) {
+                            swal({
+                                title: "Thất bại!",
+                                text: "Người dùng đã tồn tại!",
+                                icon: "warning"
+                            });
+                        }
+                        else if (res == -1) {
+                            swal({
+                                title: "Thất bại!",
+                                text: "Bạn không đủ quyền!",
+                                icon: "warning"
+                            });
+                            $("#addUser").modal("hide");
+                        }
+                        else if (res == 3) {
+                            swal({
+                                title: "Thất bại!",
+                                text: "Mỗi tỉnh chỉ có một nhân viên sở!",
+                                icon: "warning"
+                            });
+                        }
+                        else {
+                            toastr.error("Thêm người dùng thất bại !")
+                        }
+                    }
+
+                })
+            }
+
+        })
+        $("#btnSeacrhUser").click(function () {
+            var username = $("#txtUsername").val().trim();
+            var fromdate = $("#txtUserFromDate").val();
+            var todate = $("#txtUserToDate").val();
+            $.ajax({
+                url: "/User/Search",
+                type: "GET",
+                data: {
+                    page: 1,
+                    name: username,
+                    fromdate: fromdate,
+                    todate: todate
+
+                },
+                beforeSend: function () {
+                    $("#modalLoad").modal("show");
+                }, success: function (res) {
+                    $("#tableUser").html(res);
+                    $("#modalLoad").modal("hide");
+                }
+
+            });
+
+
+
+        });
+        $(document).on("keyup", function (e) {
+            if (e.keyCode == 13) {
+                $("#btnSeacrhUser").click();
+            }
+        });
+
+
+    });
+    // show mật khẩu
+    $(document).ready(function () {
+        $("#show_hide_password a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password input').attr("type") == "text") {
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass("fa-eye-slash");
+                $('#show_hide_password i').removeClass("fa-eye");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass("fa-eye-slash");
+                $('#show_hide_password i').addClass("fa-eye");
+            }
+        });
+    });
+
+    // show confirm mật khẩu
+    $(document).ready(function () {
+
+        $("#confirmPassword a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#confirmPassword input').attr("type") == "text") {
+                $('#confirmPassword input').attr('type', 'password');
+                $('#confirmPassword i').addClass("fa-eye-slash");
+                $('#confirmPassword i').removeClass("fa-eye");
+            } else if ($('#confirmPassword input').attr("type") == "password") {
+                $('#confirmPassword input').attr('type', 'text');
+                $('#confirmPassword i').removeClass("fa-eye-slash");
+                $('#confirmPassword i').addClass("fa-eye");
+            }
+        });
+    });
+</script>
+<script>
+    
+    // tìm kiếm User
+    function searchUser() {
+        var name = $.trim($("#txtUsername").val());
+        var status = $.trim($("#txtStatusUser").val());
+        var address = $.trim($("#txtAddress").val());
+        var type = $.trim($("#txtTypeUser").val());
+
+        $.ajax({
+            url: "/User/Search",
+            data: {
+                Page: 1,
+                Name: name,
+                Status: status,
+                Address: address,
+                Type: type
+            },
+            success: function (rs) {
+                $("#tableUser").html(rs);
+            }
+        })
+
+    }
+</script>

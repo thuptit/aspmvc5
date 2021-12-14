@@ -1,0 +1,292 @@
+﻿@using Data.Model.APIWeb
+@using Data.Utils
+@using PagedList.Mvc
+@using System.Web
+@model  PagedList.IPagedList<UserDetailOutputModel>
+<div class="col-6 mt-2 ">
+    <span>Kết quả lọc : </span><label>@Model.TotalItemCount</label>
+</div>
+<div class=" col-6 mt-2">
+    <div class="row">
+        <div class="col-3 dropdowntx">
+            <span>Hành động</span>
+            <span class="text-primary border" style="width:17px;height:17px;border:2px solid #CCCCCC;border-radius:60px;cursor:pointer"> <i class="fa fa-ellipsis-h ml-1 mr-1"></i></span>
+            <div class="dropdown-content">
+                <a href="#" title="Xóa" onclick="deleteUser();"><i class="fa fa-trash btnDelete"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<table class=" table table-active table-bordered table-hover table-striped table-responsive-md table-responsive-sm  mt-2" id="tableProvince">
+    <thead class="text-center">
+        <tr>
+            <th>
+                <input type="checkbox" name="name" value="" id="checkAllProvince" />
+            </th>
+            <th>STT</th>
+            <th>Tên tài khoản</th>
+            <th>Email</th>
+            <th>Điện thoại</th>
+            <th>Tỉnh/Thành phố</th>
+            <th>Loại tài khoản</th>
+            <th>Trạng thái</th>
+            <th>Ngày tạo</th>
+
+        </tr>
+    </thead>
+    <tbody class="text-center">
+
+        @{
+            // LoginOutputModel sesion = (LoginOutputModel)HttpContext.Current.Session[Sessions.LOGIN];
+            if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="10">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+
+
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var data in Model)
+                {
+
+                    //if (sesion.Role == SystemParam.ROLE_USER_SUPER_ADMIN)
+                    //{
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="name" value="" class="isCheckedProvince" />
+                        </td>
+                        <td><a style="color:black" href="javascript:void(0)" onclick="showUser(@data.Id)">@stt</a></td>
+                        <td><a style="color:black" href="javascript:void(0)" onclick="showUser(@data.Id)">@data.Account</a></td>
+                        <td><a style="color:black" href="javascript:void(0)" onclick="showUser(@data.Id)">@data.Email</a></td>
+                        <td><a style="color:black" href="javascript:void(0)" onclick="showUser(@data.Id)">@data.Phone</a></td>
+                        <td><a style="color:black" href="javascript:void(0)" onclick="showUser(@data.Id)">@data.NameA</a></td>
+
+                        @{
+                            if (data.Role == SystemParam.ROLE_ADMIN)
+                            {
+                                <td><a style="color:black" href="javascript:void(0)" onclick="showUser(@data.Id)">Admin</a></td>
+                            }
+                            else if (data.Role == SystemParam.ROLE_USER_DEPARTMENT)
+                            {
+                                <td><a style="color:black" href="javascript:void(0)" onclick="showUser(@data.Id)">Sở NCC</a></td>
+                            }
+                            else if (data.Role == SystemParam.ROLE_USER_POLICY_1)
+                            {
+                                <td><a style="color:black" href="javascript:void(0)" onclick="showUser(@data.Id)">Phòng chính sách 1</a></td>
+                            }
+                            else
+                            {
+                                <td style="color:black" onclick="showUser(@data.Id)"></td>
+                            }
+                        }
+                        @{
+                            if (data.Status == 1)
+                            {
+                                <td><a style="color:black" href="javascript:void(0)" onclick="showUser(@data.Id)">Đang hoạt động</a></td>
+                            }
+                            if (data.Status == 0)
+                            {
+                                <td><a style="color:black" href="javascript:void(0)" onclick="showUser(@data.Id)">Dừng hoạt động</a></td>
+                            }
+                        }
+                        <td><a style="color:black" href="javascript:void(0)" onclick="showUser(@data.Id)">@data.CreatedDateStr</a></td>
+                        @*<td>
+                                <a data-toggle="tooltip" data-placement="top" title="Chi tiết." class="cursor-pointer" onclick="getUserDetail(@data.Id,@sesion.Id,@sesion.Role)">
+                                    <i class="btnEdit fa fa-fw fa-edit"></i>
+                                </a>
+                                <a data-toggle="tooltip" data-placement="top" title="Xóa tài khoản." class="cursor-pointer" onclick="DeleteUser(@data.Id,@data.Role)">
+                                    <i class="btnDelete fa fa-fw fa-trash-o"></i>
+                                </a>
+
+                                <a data-toggle="tooltip" data-placement="top" title="Reset mật khẩu." class="cursor-pointer ml-2" onclick="ResetPass(@data.Id)">
+                                    <i class="fa fa-refresh" aria-hidden="true" style="font-size:20px"></i>
+                                </a>
+
+                            </td>*@
+                        @*<td class="width2btn">
+                                <a data-toggle="tooltip" data-placement="top" title="Sửa User" class="cursor-pointer" onclick="showUser(@data.Id)">
+                                    <i class="btnEdit fa fa-fw fa-edit"></i>
+                                </a>
+                                <a data-toggle="tooltip" data-placement="top" title="Xóa User" class="cursor-pointer" onclick="DeleteUser(@data.Id)">
+                                    <i class="btnDelete fa fa-fw fa-trash-o"></i>
+                                </a>
+                            </td>*@
+                        <td style="display:none"><input class="ProvinceId" type="text" value="@data.Id" /></td>
+
+                    </tr>
+                    stt++;
+
+
+                }
+            }
+        }
+
+    </tbody>
+</table>
+<input type="hidden" id="txtPageCurrent" value="@ViewBag.PageCurrent" class="txtPageCurrent" />
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(Model, Page => Url.Action("Search", new { Page, name = ViewBag.name, fromdate = ViewBag.fromdate, todate = ViewBag.todate }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            UpdateTargetId = "tableUser",
+        LoadingElementId = "modalLoad"
+        })
+        )
+    </div>
+</div>
+@*<script>
+
+        function DeleteUser(Id, role) {
+            if (role == 1) {
+                swal({
+                    title: " Không được xóa Super admin !",
+                    icon: "error"
+                });
+                return;
+            }
+            swal({
+                title: "Bạn có thực sự muốn xóa?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+
+            }).then((check) => {
+                if (check) {
+                    $.ajax({
+                        url: "/User/DeleteUser",
+                        type: "POST",
+                        data: {
+                            Id: Id,
+                        },
+                        success: function (res) {
+                            if (res == 1) {
+
+                                // toastr.success("Xóa người dùng thành công!")
+                                swal("Xóa tài khoản thành công", "", "success");
+                                $("#btnSeacrhUser").click();
+                            }
+                            else if (res == -1) {
+                                swal({
+                                    title: "Thất bại!",
+                                    text: "Bạn không đủ quyền!",
+                                    icon: "error"
+                                });
+
+                            }
+                            else {
+                                toastr.error("Xóa người dùng thất bại!")
+                            }
+
+                        }
+                    })
+                    searchUser();
+                }
+            })
+        }
+
+        function getUserDetail(Id, Idyourseft, role) {
+            if (Idyourseft != Id && role != 1) {
+                swal({
+                    title: " Không được sửa của admin khác!",
+                    icon: "error"
+                });
+                return;
+            }
+
+            $.ajax({
+                url: "/User/GetUserDetail",
+                type: "POST",
+                data: {
+                    Id: Id,
+                },
+                beforeSend: function () {
+                    $("modalLoad").modal("show");
+                },
+
+                success: function (res) {
+
+                    $("#modaledituser").html(res);
+                    $("modalLoad").modal("hide");
+                    $("#editUser").modal("show");
+                }
+
+            })
+        }
+
+
+        function ResetPass(UserId) {
+            swal({
+                title: "Bạn có thực sự muốn reset mật khẩu?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+
+            }).then((check) => {
+                if (check) {
+                    $.ajax({
+                        url: "/User/ResetPass",
+                        type: "POST",
+                        data: {
+                            UserId: UserId,
+                        },
+                        success: function (res) {
+                            if (res == 1) {
+
+                                swal({
+                                    title: "Reset mật khẩu thành công !",
+                                    text: " Mật khẩu mặc định là "+@SystemParam.DEFAULT_PASSWORD,
+                                    icon:"success"
+                                })
+                            }
+
+                            else {
+                                toastr.error("Reset mật khẩu thất bại !")
+                            }
+
+                        }
+
+                    })
+                }
+            })
+        }
+    </script>*@
+
+
+<script>
+@* Sửa User *@
+    function showUser(id) {
+        $("#modalLoad").modal("show");
+        $.ajax({
+            url: "/User/GetUserDetail",
+            data: { Id: id },
+            success: function (rs) {
+                $("#modalLoad").modal("hide");
+                $('#UpdateItem').html(rs);
+                $('#editUser').modal('show');
+            }
+
+        })
+    }
+</script>
+
+<script>
+    $("#checkAllProvince").click(function () {
+        $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+    });
+
+    $("input[type=checkbox]").click(function () {
+        if (!$(this).prop("checked")) {
+            $("#checkAllProvince").prop("checked", false);
+        }
+    });
+
+</script>
+
+
+

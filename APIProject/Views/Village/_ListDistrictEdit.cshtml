@@ -1,0 +1,17 @@
+﻿@using Data.Model.APIWeb
+
+<select class="form-control" id="sltEditVillageD">
+    @{
+        foreach (var i in (List<ListDistrict>)ViewBag.ListDistrict)
+        {
+            if (ViewBag.ID == i.ID)
+            {
+                <option value="@i.ID" selected>@i.Name</option>
+            }
+            else
+            {
+                <option value="@i.ID">@i.Name</option>
+            }
+        }
+    }
+</select>

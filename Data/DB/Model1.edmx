@@ -1,0 +1,2202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TO_QUOC_GHI_CONGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Config">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Position" Type="nvarchar" MaxLength="100" />
+          <Property Name="UserDecition" Type="nvarchar" MaxLength="100" />
+          <Property Name="WrongLoginTime" Type="nvarchar" MaxLength="100" />
+          <Property Name="LockTime" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="DecisionCode">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FromDate" Type="datetime" />
+          <Property Name="ToDate" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="fDate" Type="int" />
+          <Property Name="fMonth" Type="int" />
+          <Property Name="fYear" Type="int" />
+          <Property Name="tDate" Type="int" />
+          <Property Name="tMonth" Type="int" />
+          <Property Name="tYear" Type="int" />
+          <Property Name="UserCreateID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="DefineTypeRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ProvinceCode" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="GroupMedia">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="path" Type="varchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="IsReject" Type="int" />
+        </EntityType>
+        <EntityType Name="GroupRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecordID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DefineTypeRecordID" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ReportNumber" Type="int" />
+          <Property Name="DecisionDate" Type="datetime" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="DocumentNumber" Type="int" />
+          <Property Name="DocumentYear" Type="int" />
+          <Property Name="DocumentPhase" Type="int" />
+          <Property Name="CerfiticateCode" Type="varchar" MaxLength="50" />
+          <Property Name="Type" Type="tinyint" />
+          <Property Name="ReportDate" Type="datetime" />
+          <Property Name="DecitionNumber" Type="int" />
+          <Property Name="UserCreateID" Type="int" />
+          <Property Name="SubmitDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Content" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="RecordID" Type="int" />
+          <Property Name="IsReaded" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="CreadedDate" Type="datetime" Nullable="false" />
+          <Property Name="GroupID" Type="int" />
+        </EntityType>
+        <EntityType Name="Objects">
+          <Key>
+            <PropertyRef Name="ObjectID" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="UserCreateID" Type="int" Nullable="false" />
+          <Property Name="IsArmy" Type="int" />
+          <Property Name="IsGuerrilla" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="ObjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Period">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="FromDate" Type="datetime" />
+          <Property Name="ToDate" Type="datetime" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="fDate" Type="int" />
+          <Property Name="fMonth" Type="int" />
+          <Property Name="fYear" Type="int" />
+          <Property Name="tDate" Type="int" />
+          <Property Name="tMonth" Type="int" />
+          <Property Name="tYear" Type="int" />
+          <Property Name="UserCreateID" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" />
+          <Property Name="TimeLine" Type="nvarchar(max)" />
+          <Property Name="DisplayOrder" Type="int" />
+          <Property Name="PrintingContent" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsArmy" Type="int" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsGuerrilla" Type="int" />
+          <Property Name="UserCreateID" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="DisplayOrder" Type="int" />
+        </EntityType>
+        <EntityType Name="Province">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ProvinceCode" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Record">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="nvarchar" MaxLength="50" />
+          <Property Name="MartyrsName" Type="nvarchar" MaxLength="500" />
+          <Property Name="PositionID" Type="int" />
+          <Property Name="ObjectID" Type="int" />
+          <Property Name="VilageID" Type="int" />
+          <Property Name="DistrictID" Type="int" />
+          <Property Name="SacrificeDate" Type="datetime" />
+          <Property Name="PeriodID" Type="int" />
+          <Property Name="CerfiticateCode" Type="varchar" MaxLength="50" />
+          <Property Name="CerfiticateNumber" Type="int" />
+          <Property Name="DecitionCodeID" Type="int" />
+          <Property Name="DecitionDate" Type="datetime" />
+          <Property Name="IsReject" Type="int" Nullable="false" />
+          <Property Name="ReasionReject" Type="nvarchar(max)" />
+          <Property Name="IsPrint" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="RequesterName" Type="nvarchar" MaxLength="500" />
+          <Property Name="RequesterPhone" Type="varchar" MaxLength="11" />
+          <Property Name="RequesterResion" Type="nvarchar(max)" />
+          <Property Name="RequesterRelation" Type="nvarchar" MaxLength="500" />
+          <Property Name="RequesterProvince" Type="int" />
+          <Property Name="RequesterDistrict" Type="int" />
+          <Property Name="RequesterVilage" Type="int" />
+          <Property Name="RequesterAddress" Type="nvarchar" MaxLength="1000" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="ProvinceID" Type="int" />
+          <Property Name="DecitionNumber" Type="int" />
+          <Property Name="Type" Type="int" />
+          <Property Name="sacrifice_date" Type="int" />
+          <Property Name="sacrifice_month" Type="int" />
+          <Property Name="sacrifice_year" Type="int" />
+          <Property Name="UserCreateID" Type="int" />
+          <Property Name="Address" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProvinceRequestID" Type="int" />
+        </EntityType>
+        <EntityType Name="RecordUpdateHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="MartyrsName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="PositionID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="VillageID" Type="int" Nullable="false" />
+          <Property Name="ProvinceID" Type="int" Nullable="false" />
+          <Property Name="DistrictID" Type="int" Nullable="false" />
+          <Property Name="SacrificeDate" Type="datetime" />
+          <Property Name="PeriodID" Type="int" Nullable="false" />
+          <Property Name="CerfiticateCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CerfiticateNumber" Type="int" Nullable="false" />
+          <Property Name="DecitionNumber" Type="int" Nullable="false" />
+          <Property Name="DecitionCodeID" Type="int" Nullable="false" />
+          <Property Name="DecitionDate" Type="datetime" Nullable="false" />
+          <Property Name="IsReject" Type="int" Nullable="false" />
+          <Property Name="ReasionReject" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsPrint" Type="int" Nullable="false" />
+          <Property Name="GroupRecordID" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="RequesterName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="RequesterPhone" Type="varchar" MaxLength="11" />
+          <Property Name="RequesterResion" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RequesterRelation" Type="nvarchar" MaxLength="500" />
+          <Property Name="RequesterProvince" Type="int" Nullable="false" />
+          <Property Name="RequesterDistrict" Type="int" Nullable="false" />
+          <Property Name="RequesterVilage" Type="int" Nullable="false" />
+          <Property Name="RequesterAddress" Type="nvarchar" MaxLength="1000" />
+          <Property Name="UserUpdateID" Type="int" Nullable="false" />
+          <Property Name="RecordID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Role" Type="int" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="LastLoginDate" Type="datetime" />
+          <Property Name="WrongLoginAmount" Type="int" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="500" />
+          <Property Name="ResetPassword" Type="nvarchar" MaxLength="200" />
+          <Property Name="ResetPasswordExprice" Type="datetime" />
+          <Property Name="Account" Type="nvarchar(max)" />
+          <Property Name="ProvinceID" Type="int" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CountLogin" Type="int" />
+          <Property Name="DayLogin" Type="datetime" />
+          <Property Name="TimeOutLogin" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Village">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="District_id" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__DecisionC__UserC__797309D9">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="DecisionCode" Type="Self.DecisionCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DecisionCode">
+              <PropertyRef Name="UserCreateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__District__Provin__2A4B4B5E">
+          <End Role="Province" Type="Self.Province" Multiplicity="1" />
+          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="ProvinceCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Objects__UserCre__7B5B524B">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Objects" Type="Self.Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Objects">
+              <PropertyRef Name="UserCreateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Period__UserCrea__7A672E12">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Period" Type="Self.Period" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Period">
+              <PropertyRef Name="UserCreateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ward__District_i__33D4B598">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="Village" Type="Self.Village" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Village">
+              <PropertyRef Name="District_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupMedia_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="GroupMedia" Type="Self.GroupMedia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupMedia">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupRecord_Groups1">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="GroupRecord" Type="Self.GroupRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupRecord">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupRecord_Record1">
+          <End Role="Record" Type="Self.Record" Multiplicity="1" />
+          <End Role="GroupRecord" Type="Self.GroupRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Record">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupRecord">
+              <PropertyRef Name="RecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_DefineTypeRecord">
+          <End Role="DefineTypeRecord" Type="Self.DefineTypeRecord" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DefineTypeRecord">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="DefineTypeRecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification_Record">
+          <End Role="Record" Type="Self.Record" Multiplicity="0..1" />
+          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Record">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="RecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Position_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Position" Type="Self.Position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Position">
+              <PropertyRef Name="UserCreateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_DecisionCode">
+          <End Role="DecisionCode" Type="Self.DecisionCode" Multiplicity="0..1" />
+          <End Role="Record" Type="Self.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DecisionCode">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="DecitionCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_District">
+          <End Role="District" Type="Self.District" Multiplicity="0..1" />
+          <End Role="Record" Type="Self.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_District1">
+          <End Role="District" Type="Self.District" Multiplicity="0..1" />
+          <End Role="Record" Type="Self.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="RequesterDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Objects">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="0..1" />
+          <End Role="Record" Type="Self.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ObjectID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="ObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Period">
+          <End Role="Period" Type="Self.Period" Multiplicity="0..1" />
+          <End Role="Record" Type="Self.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="PeriodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Position">
+          <End Role="Position" Type="Self.Position" Multiplicity="0..1" />
+          <End Role="Record" Type="Self.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Province">
+          <End Role="Province" Type="Self.Province" Multiplicity="0..1" />
+          <End Role="Record" Type="Self.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Province1">
+          <End Role="Province" Type="Self.Province" Multiplicity="0..1" />
+          <End Role="Record" Type="Self.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="RequesterProvince" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Record" Type="Self.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="UserCreateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Village">
+          <End Role="Village" Type="Self.Village" Multiplicity="0..1" />
+          <End Role="Record" Type="Self.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Village">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="VilageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Village1">
+          <End Role="Village" Type="Self.Village" Multiplicity="0..1" />
+          <End Role="Record" Type="Self.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Village">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="RequesterVilage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_DecisionCode">
+          <End Role="DecisionCode" Type="Self.DecisionCode" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DecisionCode">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="DecitionCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_District">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_District1">
+          <End Role="District" Type="Self.District" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="RequesterDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_GroupRecord">
+          <End Role="GroupRecord" Type="Self.GroupRecord" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupRecord">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="GroupRecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Objects">
+          <End Role="Objects" Type="Self.Objects" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Objects">
+              <PropertyRef Name="ObjectID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="ObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Period">
+          <End Role="Period" Type="Self.Period" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="PeriodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Position">
+          <End Role="Position" Type="Self.Position" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Province">
+          <End Role="Province" Type="Self.Province" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Province1">
+          <End Role="Province" Type="Self.Province" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="RequesterProvince" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Record">
+          <End Role="Record" Type="Self.Record" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Record">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="RecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Village">
+          <End Role="Village" Type="Self.Village" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Village">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="VillageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Village1">
+          <End Role="Village" Type="Self.Village" Multiplicity="1" />
+          <End Role="RecordUpdateHistory" Type="Self.RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Village">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="RequesterVilage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Province">
+          <End Role="Province" Type="Self.Province" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TO_QUOC_GHI_CONGModelStoreContainer">
+          <EntitySet Name="Config" EntityType="Self.Config" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DecisionCode" EntityType="Self.DecisionCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DefineTypeRecord" EntityType="Self.DefineTypeRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GroupMedia" EntityType="Self.GroupMedia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GroupRecord" EntityType="Self.GroupRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Objects" EntityType="Self.Objects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Period" EntityType="Self.Period" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Record" EntityType="Self.Record" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RecordUpdateHistory" EntityType="Self.RecordUpdateHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Village" EntityType="Self.Village" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__DecisionC__UserC__797309D9" Association="Self.FK__DecisionC__UserC__797309D9">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="DecisionCode" EntitySet="DecisionCode" />
+          </AssociationSet>
+          <AssociationSet Name="FK__District__Provin__2A4B4B5E" Association="Self.FK__District__Provin__2A4B4B5E">
+            <End Role="Province" EntitySet="Province" />
+            <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Objects__UserCre__7B5B524B" Association="Self.FK__Objects__UserCre__7B5B524B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Objects" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Period__UserCrea__7A672E12" Association="Self.FK__Period__UserCrea__7A672E12">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Period" EntitySet="Period" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ward__District_i__33D4B598" Association="Self.FK__Ward__District_i__33D4B598">
+            <End Role="District" EntitySet="District" />
+            <End Role="Village" EntitySet="Village" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupMedia_Groups" Association="Self.FK_GroupMedia_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="GroupMedia" EntitySet="GroupMedia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupRecord_Groups1" Association="Self.FK_GroupRecord_Groups1">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="GroupRecord" EntitySet="GroupRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupRecord_Record1" Association="Self.FK_GroupRecord_Record1">
+            <End Role="Record" EntitySet="Record" />
+            <End Role="GroupRecord" EntitySet="GroupRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_DefineTypeRecord" Association="Self.FK_Groups_DefineTypeRecord">
+            <End Role="DefineTypeRecord" EntitySet="DefineTypeRecord" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification_Record" Association="Self.FK_Notification_Record">
+            <End Role="Record" EntitySet="Record" />
+            <End Role="Notification" EntitySet="Notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification_Users" Association="Self.FK_Notification_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Notification" EntitySet="Notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Position_Users" Association="Self.FK_Position_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Position" EntitySet="Position" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_DecisionCode" Association="Self.FK_Record_DecisionCode">
+            <End Role="DecisionCode" EntitySet="DecisionCode" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_District" Association="Self.FK_Record_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_District1" Association="Self.FK_Record_District1">
+            <End Role="District" EntitySet="District" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Objects" Association="Self.FK_Record_Objects">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Period" Association="Self.FK_Record_Period">
+            <End Role="Period" EntitySet="Period" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Position" Association="Self.FK_Record_Position">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Province" Association="Self.FK_Record_Province">
+            <End Role="Province" EntitySet="Province" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Province1" Association="Self.FK_Record_Province1">
+            <End Role="Province" EntitySet="Province" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Users" Association="Self.FK_Record_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Village" Association="Self.FK_Record_Village">
+            <End Role="Village" EntitySet="Village" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Village1" Association="Self.FK_Record_Village1">
+            <End Role="Village" EntitySet="Village" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_DecisionCode" Association="Self.FK_RecordUpdateHistory_DecisionCode">
+            <End Role="DecisionCode" EntitySet="DecisionCode" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_District" Association="Self.FK_RecordUpdateHistory_District">
+            <End Role="District" EntitySet="District" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_District1" Association="Self.FK_RecordUpdateHistory_District1">
+            <End Role="District" EntitySet="District" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_GroupRecord" Association="Self.FK_RecordUpdateHistory_GroupRecord">
+            <End Role="GroupRecord" EntitySet="GroupRecord" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Objects" Association="Self.FK_RecordUpdateHistory_Objects">
+            <End Role="Objects" EntitySet="Objects" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Period" Association="Self.FK_RecordUpdateHistory_Period">
+            <End Role="Period" EntitySet="Period" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Position" Association="Self.FK_RecordUpdateHistory_Position">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Province" Association="Self.FK_RecordUpdateHistory_Province">
+            <End Role="Province" EntitySet="Province" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Province1" Association="Self.FK_RecordUpdateHistory_Province1">
+            <End Role="Province" EntitySet="Province" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Record" Association="Self.FK_RecordUpdateHistory_Record">
+            <End Role="Record" EntitySet="Record" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Village" Association="Self.FK_RecordUpdateHistory_Village">
+            <End Role="Village" EntitySet="Village" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Village1" Association="Self.FK_RecordUpdateHistory_Village1">
+            <End Role="Village" EntitySet="Village" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Province" Association="Self.FK_Users_Province">
+            <End Role="Province" EntitySet="Province" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TO_QUOC_GHI_CONGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TO_QUOC_GHI_CONGEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Configs" EntityType="TO_QUOC_GHI_CONGModel.Config" />
+          <EntitySet Name="DecisionCodes" EntityType="TO_QUOC_GHI_CONGModel.DecisionCode" />
+          <EntitySet Name="DefineTypeRecords" EntityType="TO_QUOC_GHI_CONGModel.DefineTypeRecord" />
+          <EntitySet Name="Districts" EntityType="TO_QUOC_GHI_CONGModel.District" />
+          <EntitySet Name="GroupMedias" EntityType="TO_QUOC_GHI_CONGModel.GroupMedia" />
+          <EntitySet Name="GroupRecords" EntityType="TO_QUOC_GHI_CONGModel.GroupRecord" />
+          <EntitySet Name="Groups" EntityType="TO_QUOC_GHI_CONGModel.Group" />
+          <EntitySet Name="Notifications" EntityType="TO_QUOC_GHI_CONGModel.Notification" />
+          <EntitySet Name="Objects" EntityType="TO_QUOC_GHI_CONGModel.Object" />
+          <EntitySet Name="Periods" EntityType="TO_QUOC_GHI_CONGModel.Period" />
+          <EntitySet Name="Positions" EntityType="TO_QUOC_GHI_CONGModel.Position" />
+          <EntitySet Name="Provinces" EntityType="TO_QUOC_GHI_CONGModel.Province" />
+          <EntitySet Name="Records" EntityType="TO_QUOC_GHI_CONGModel.Record" />
+          <EntitySet Name="RecordUpdateHistories" EntityType="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" />
+          <EntitySet Name="sysdiagrams" EntityType="TO_QUOC_GHI_CONGModel.sysdiagram" />
+          <EntitySet Name="Users" EntityType="TO_QUOC_GHI_CONGModel.User" />
+          <EntitySet Name="Villages" EntityType="TO_QUOC_GHI_CONGModel.Village" />
+          <AssociationSet Name="FK__DecisionC__UserC__797309D9" Association="TO_QUOC_GHI_CONGModel.FK__DecisionC__UserC__797309D9">
+            <End Role="User" EntitySet="Users" />
+            <End Role="DecisionCode" EntitySet="DecisionCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_DecisionCode" Association="TO_QUOC_GHI_CONGModel.FK_Record_DecisionCode">
+            <End Role="DecisionCode" EntitySet="DecisionCodes" />
+            <End Role="Record" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_DecisionCode" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_DecisionCode">
+            <End Role="DecisionCode" EntitySet="DecisionCodes" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_DefineTypeRecord" Association="TO_QUOC_GHI_CONGModel.FK_Groups_DefineTypeRecord">
+            <End Role="DefineTypeRecord" EntitySet="DefineTypeRecords" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK__District__Provin__2A4B4B5E" Association="TO_QUOC_GHI_CONGModel.FK__District__Provin__2A4B4B5E">
+            <End Role="Province" EntitySet="Provinces" />
+            <End Role="District" EntitySet="Districts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ward__District_i__33D4B598" Association="TO_QUOC_GHI_CONGModel.FK__Ward__District_i__33D4B598">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Village" EntitySet="Villages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_District" Association="TO_QUOC_GHI_CONGModel.FK_Record_District">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Record" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_District1" Association="TO_QUOC_GHI_CONGModel.FK_Record_District1">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="Record" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_District" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_District">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_District1" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_District1">
+            <End Role="District" EntitySet="Districts" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupMedia_Groups" Association="TO_QUOC_GHI_CONGModel.FK_GroupMedia_Groups">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="GroupMedia" EntitySet="GroupMedias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupRecord_Groups1" Association="TO_QUOC_GHI_CONGModel.FK_GroupRecord_Groups1">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="GroupRecord" EntitySet="GroupRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupRecord_Record1" Association="TO_QUOC_GHI_CONGModel.FK_GroupRecord_Record1">
+            <End Role="Record" EntitySet="Records" />
+            <End Role="GroupRecord" EntitySet="GroupRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_GroupRecord" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_GroupRecord">
+            <End Role="GroupRecord" EntitySet="GroupRecords" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification_Record" Association="TO_QUOC_GHI_CONGModel.FK_Notification_Record">
+            <End Role="Record" EntitySet="Records" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification_Users" Association="TO_QUOC_GHI_CONGModel.FK_Notification_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Objects__UserCre__7B5B524B" Association="TO_QUOC_GHI_CONGModel.FK__Objects__UserCre__7B5B524B">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Object" EntitySet="Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Objects" Association="TO_QUOC_GHI_CONGModel.FK_Record_Objects">
+            <End Role="Object" EntitySet="Objects" />
+            <End Role="Record" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Objects" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Objects">
+            <End Role="Object" EntitySet="Objects" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Period__UserCrea__7A672E12" Association="TO_QUOC_GHI_CONGModel.FK__Period__UserCrea__7A672E12">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Period" EntitySet="Periods" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Period" Association="TO_QUOC_GHI_CONGModel.FK_Record_Period">
+            <End Role="Period" EntitySet="Periods" />
+            <End Role="Record" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Period" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Period">
+            <End Role="Period" EntitySet="Periods" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Position_Users" Association="TO_QUOC_GHI_CONGModel.FK_Position_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Position" EntitySet="Positions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Position" Association="TO_QUOC_GHI_CONGModel.FK_Record_Position">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="Record" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Position" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Position">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Province" Association="TO_QUOC_GHI_CONGModel.FK_Record_Province">
+            <End Role="Province" EntitySet="Provinces" />
+            <End Role="Record" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Province1" Association="TO_QUOC_GHI_CONGModel.FK_Record_Province1">
+            <End Role="Province" EntitySet="Provinces" />
+            <End Role="Record" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Province" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Province">
+            <End Role="Province" EntitySet="Provinces" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Province1" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Province1">
+            <End Role="Province" EntitySet="Provinces" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Province" Association="TO_QUOC_GHI_CONGModel.FK_Users_Province">
+            <End Role="Province" EntitySet="Provinces" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Users" Association="TO_QUOC_GHI_CONGModel.FK_Record_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Record" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Village" Association="TO_QUOC_GHI_CONGModel.FK_Record_Village">
+            <End Role="Village" EntitySet="Villages" />
+            <End Role="Record" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Village1" Association="TO_QUOC_GHI_CONGModel.FK_Record_Village1">
+            <End Role="Village" EntitySet="Villages" />
+            <End Role="Record" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Record" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Record">
+            <End Role="Record" EntitySet="Records" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Village" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Village">
+            <End Role="Village" EntitySet="Villages" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecordUpdateHistory_Village1" Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Village1">
+            <End Role="Village" EntitySet="Villages" />
+            <End Role="RecordUpdateHistory" EntitySet="RecordUpdateHistories" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Config">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserDecition" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WrongLoginTime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LockTime" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DecisionCode">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FromDate" Type="DateTime" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="fDate" Type="Int32" />
+          <Property Name="fMonth" Type="Int32" />
+          <Property Name="fYear" Type="Int32" />
+          <Property Name="tDate" Type="Int32" />
+          <Property Name="tMonth" Type="Int32" />
+          <Property Name="tYear" Type="Int32" />
+          <Property Name="UserCreateID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="TO_QUOC_GHI_CONGModel.FK__DecisionC__UserC__797309D9" FromRole="DecisionCode" ToRole="User" />
+          <NavigationProperty Name="Records" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_DecisionCode" FromRole="DecisionCode" ToRole="Record" />
+          <NavigationProperty Name="RecordUpdateHistories" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_DecisionCode" FromRole="DecisionCode" ToRole="RecordUpdateHistory" />
+        </EntityType>
+        <EntityType Name="DefineTypeRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Groups" Relationship="TO_QUOC_GHI_CONGModel.FK_Groups_DefineTypeRecord" FromRole="DefineTypeRecord" ToRole="Group" />
+        </EntityType>
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProvinceCode" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Province" Relationship="TO_QUOC_GHI_CONGModel.FK__District__Provin__2A4B4B5E" FromRole="District" ToRole="Province" />
+          <NavigationProperty Name="Villages" Relationship="TO_QUOC_GHI_CONGModel.FK__Ward__District_i__33D4B598" FromRole="District" ToRole="Village" />
+          <NavigationProperty Name="Records" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_District" FromRole="District" ToRole="Record" />
+          <NavigationProperty Name="Records1" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_District1" FromRole="District" ToRole="Record" />
+          <NavigationProperty Name="RecordUpdateHistories" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_District" FromRole="District" ToRole="RecordUpdateHistory" />
+          <NavigationProperty Name="RecordUpdateHistories1" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_District1" FromRole="District" ToRole="RecordUpdateHistory" />
+        </EntityType>
+        <EntityType Name="GroupMedia">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <Property Name="path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="IsReject" Type="Int32" />
+          <NavigationProperty Name="Group" Relationship="TO_QUOC_GHI_CONGModel.FK_GroupMedia_Groups" FromRole="GroupMedia" ToRole="Group" />
+        </EntityType>
+        <EntityType Name="GroupRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecordID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="TO_QUOC_GHI_CONGModel.FK_GroupRecord_Groups1" FromRole="GroupRecord" ToRole="Group" />
+          <NavigationProperty Name="Record" Relationship="TO_QUOC_GHI_CONGModel.FK_GroupRecord_Record1" FromRole="GroupRecord" ToRole="Record" />
+          <NavigationProperty Name="RecordUpdateHistories" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_GroupRecord" FromRole="GroupRecord" ToRole="RecordUpdateHistory" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DefineTypeRecordID" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ReportNumber" Type="Int32" />
+          <Property Name="DecisionDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="DocumentNumber" Type="Int32" />
+          <Property Name="DocumentYear" Type="Int32" />
+          <Property Name="DocumentPhase" Type="Int32" />
+          <Property Name="CerfiticateCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="Byte" />
+          <Property Name="ReportDate" Type="DateTime" Precision="3" />
+          <Property Name="DecitionNumber" Type="Int32" />
+          <Property Name="UserCreateID" Type="Int32" />
+          <Property Name="SubmitDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DefineTypeRecord" Relationship="TO_QUOC_GHI_CONGModel.FK_Groups_DefineTypeRecord" FromRole="Group" ToRole="DefineTypeRecord" />
+          <NavigationProperty Name="GroupMedias" Relationship="TO_QUOC_GHI_CONGModel.FK_GroupMedia_Groups" FromRole="Group" ToRole="GroupMedia" />
+          <NavigationProperty Name="GroupRecords" Relationship="TO_QUOC_GHI_CONGModel.FK_GroupRecord_Groups1" FromRole="Group" ToRole="GroupRecord" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecordID" Type="Int32" />
+          <Property Name="IsReaded" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="CreadedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GroupID" Type="Int32" />
+          <NavigationProperty Name="Record" Relationship="TO_QUOC_GHI_CONGModel.FK_Notification_Record" FromRole="Notification" ToRole="Record" />
+          <NavigationProperty Name="User" Relationship="TO_QUOC_GHI_CONGModel.FK_Notification_Users" FromRole="Notification" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Object">
+          <Key>
+            <PropertyRef Name="ObjectID" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserCreateID" Type="Int32" Nullable="false" />
+          <Property Name="IsArmy" Type="Int32" />
+          <Property Name="IsGuerrilla" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="TO_QUOC_GHI_CONGModel.FK__Objects__UserCre__7B5B524B" FromRole="Object" ToRole="User" />
+          <NavigationProperty Name="Records" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Objects" FromRole="Object" ToRole="Record" />
+          <NavigationProperty Name="RecordUpdateHistories" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Objects" FromRole="Object" ToRole="RecordUpdateHistory" />
+        </EntityType>
+        <EntityType Name="Period">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="FromDate" Type="DateTime" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fDate" Type="Int32" />
+          <Property Name="fMonth" Type="Int32" />
+          <Property Name="fYear" Type="Int32" />
+          <Property Name="tDate" Type="Int32" />
+          <Property Name="tMonth" Type="Int32" />
+          <Property Name="tYear" Type="Int32" />
+          <Property Name="UserCreateID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="TimeLine" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <Property Name="PrintingContent" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="TO_QUOC_GHI_CONGModel.FK__Period__UserCrea__7A672E12" FromRole="Period" ToRole="User" />
+          <NavigationProperty Name="Records" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Period" FromRole="Period" ToRole="Record" />
+          <NavigationProperty Name="RecordUpdateHistories" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Period" FromRole="Period" ToRole="RecordUpdateHistory" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsArmy" Type="Int32" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsGuerrilla" Type="Int32" />
+          <Property Name="UserCreateID" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="DisplayOrder" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="TO_QUOC_GHI_CONGModel.FK_Position_Users" FromRole="Position" ToRole="User" />
+          <NavigationProperty Name="Records" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Position" FromRole="Position" ToRole="Record" />
+          <NavigationProperty Name="RecordUpdateHistories" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Position" FromRole="Position" ToRole="RecordUpdateHistory" />
+        </EntityType>
+        <EntityType Name="Province">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ProvinceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Districts" Relationship="TO_QUOC_GHI_CONGModel.FK__District__Provin__2A4B4B5E" FromRole="Province" ToRole="District" />
+          <NavigationProperty Name="Records" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Province" FromRole="Province" ToRole="Record" />
+          <NavigationProperty Name="Records1" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Province1" FromRole="Province" ToRole="Record" />
+          <NavigationProperty Name="RecordUpdateHistories" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Province" FromRole="Province" ToRole="RecordUpdateHistory" />
+          <NavigationProperty Name="RecordUpdateHistories1" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Province1" FromRole="Province" ToRole="RecordUpdateHistory" />
+          <NavigationProperty Name="Users" Relationship="TO_QUOC_GHI_CONGModel.FK_Users_Province" FromRole="Province" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Record">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MartyrsName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PositionID" Type="Int32" />
+          <Property Name="ObjectID" Type="Int32" />
+          <Property Name="VilageID" Type="Int32" />
+          <Property Name="DistrictID" Type="Int32" />
+          <Property Name="SacrificeDate" Type="DateTime" Precision="3" />
+          <Property Name="PeriodID" Type="Int32" />
+          <Property Name="CerfiticateCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CerfiticateNumber" Type="Int32" />
+          <Property Name="DecitionCodeID" Type="Int32" />
+          <Property Name="DecitionDate" Type="DateTime" Precision="3" />
+          <Property Name="IsReject" Type="Int32" Nullable="false" />
+          <Property Name="ReasionReject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsPrint" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="RequesterName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RequesterPhone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="RequesterResion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RequesterRelation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RequesterProvince" Type="Int32" />
+          <Property Name="RequesterDistrict" Type="Int32" />
+          <Property Name="RequesterVilage" Type="Int32" />
+          <Property Name="RequesterAddress" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="ProvinceID" Type="Int32" />
+          <Property Name="DecitionNumber" Type="Int32" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="sacrifice_date" Type="Int32" />
+          <Property Name="sacrifice_month" Type="Int32" />
+          <Property Name="sacrifice_year" Type="Int32" />
+          <Property Name="UserCreateID" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProvinceRequestID" Type="Int32" />
+          <NavigationProperty Name="DecisionCode" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_DecisionCode" FromRole="Record" ToRole="DecisionCode" />
+          <NavigationProperty Name="District" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_District" FromRole="Record" ToRole="District" />
+          <NavigationProperty Name="District1" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_District1" FromRole="Record" ToRole="District" />
+          <NavigationProperty Name="GroupRecords" Relationship="TO_QUOC_GHI_CONGModel.FK_GroupRecord_Record1" FromRole="Record" ToRole="GroupRecord" />
+          <NavigationProperty Name="Notifications" Relationship="TO_QUOC_GHI_CONGModel.FK_Notification_Record" FromRole="Record" ToRole="Notification" />
+          <NavigationProperty Name="Object" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Objects" FromRole="Record" ToRole="Object" />
+          <NavigationProperty Name="Period" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Period" FromRole="Record" ToRole="Period" />
+          <NavigationProperty Name="Position" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Position" FromRole="Record" ToRole="Position" />
+          <NavigationProperty Name="Province" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Province" FromRole="Record" ToRole="Province" />
+          <NavigationProperty Name="Province1" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Province1" FromRole="Record" ToRole="Province" />
+          <NavigationProperty Name="User" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Users" FromRole="Record" ToRole="User" />
+          <NavigationProperty Name="Village" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Village" FromRole="Record" ToRole="Village" />
+          <NavigationProperty Name="Village1" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Village1" FromRole="Record" ToRole="Village" />
+          <NavigationProperty Name="RecordUpdateHistories" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Record" FromRole="Record" ToRole="RecordUpdateHistory" />
+        </EntityType>
+        <EntityType Name="RecordUpdateHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="MartyrsName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PositionID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="VillageID" Type="Int32" Nullable="false" />
+          <Property Name="ProvinceID" Type="Int32" Nullable="false" />
+          <Property Name="DistrictID" Type="Int32" Nullable="false" />
+          <Property Name="SacrificeDate" Type="DateTime" Precision="3" />
+          <Property Name="PeriodID" Type="Int32" Nullable="false" />
+          <Property Name="CerfiticateCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CerfiticateNumber" Type="Int32" Nullable="false" />
+          <Property Name="DecitionNumber" Type="Int32" Nullable="false" />
+          <Property Name="DecitionCodeID" Type="Int32" Nullable="false" />
+          <Property Name="DecitionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsReject" Type="Int32" Nullable="false" />
+          <Property Name="ReasionReject" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsPrint" Type="Int32" Nullable="false" />
+          <Property Name="GroupRecordID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="RequesterName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RequesterPhone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="RequesterResion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RequesterRelation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RequesterProvince" Type="Int32" Nullable="false" />
+          <Property Name="RequesterDistrict" Type="Int32" Nullable="false" />
+          <Property Name="RequesterVilage" Type="Int32" Nullable="false" />
+          <Property Name="RequesterAddress" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="UserUpdateID" Type="Int32" Nullable="false" />
+          <Property Name="RecordID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DecisionCode" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_DecisionCode" FromRole="RecordUpdateHistory" ToRole="DecisionCode" />
+          <NavigationProperty Name="District" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_District" FromRole="RecordUpdateHistory" ToRole="District" />
+          <NavigationProperty Name="District1" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_District1" FromRole="RecordUpdateHistory" ToRole="District" />
+          <NavigationProperty Name="GroupRecord" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_GroupRecord" FromRole="RecordUpdateHistory" ToRole="GroupRecord" />
+          <NavigationProperty Name="Object" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Objects" FromRole="RecordUpdateHistory" ToRole="Object" />
+          <NavigationProperty Name="Period" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Period" FromRole="RecordUpdateHistory" ToRole="Period" />
+          <NavigationProperty Name="Position" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Position" FromRole="RecordUpdateHistory" ToRole="Position" />
+          <NavigationProperty Name="Province" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Province" FromRole="RecordUpdateHistory" ToRole="Province" />
+          <NavigationProperty Name="Province1" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Province1" FromRole="RecordUpdateHistory" ToRole="Province" />
+          <NavigationProperty Name="Record" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Record" FromRole="RecordUpdateHistory" ToRole="Record" />
+          <NavigationProperty Name="Village" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Village" FromRole="RecordUpdateHistory" ToRole="Village" />
+          <NavigationProperty Name="Village1" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Village1" FromRole="RecordUpdateHistory" ToRole="Village" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+          <Property Name="WrongLoginAmount" Type="Int32" />
+          <Property Name="FullName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ResetPassword" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ResetPasswordExprice" Type="DateTime" Precision="3" />
+          <Property Name="Account" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProvinceID" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="CountLogin" Type="Int32" />
+          <Property Name="DayLogin" Type="DateTime" Precision="3" />
+          <Property Name="TimeOutLogin" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DecisionCodes" Relationship="TO_QUOC_GHI_CONGModel.FK__DecisionC__UserC__797309D9" FromRole="User" ToRole="DecisionCode" />
+          <NavigationProperty Name="Notifications" Relationship="TO_QUOC_GHI_CONGModel.FK_Notification_Users" FromRole="User" ToRole="Notification" />
+          <NavigationProperty Name="Objects" Relationship="TO_QUOC_GHI_CONGModel.FK__Objects__UserCre__7B5B524B" FromRole="User" ToRole="Object" />
+          <NavigationProperty Name="Periods" Relationship="TO_QUOC_GHI_CONGModel.FK__Period__UserCrea__7A672E12" FromRole="User" ToRole="Period" />
+          <NavigationProperty Name="Positions" Relationship="TO_QUOC_GHI_CONGModel.FK_Position_Users" FromRole="User" ToRole="Position" />
+          <NavigationProperty Name="Province" Relationship="TO_QUOC_GHI_CONGModel.FK_Users_Province" FromRole="User" ToRole="Province" />
+          <NavigationProperty Name="Records" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Users" FromRole="User" ToRole="Record" />
+        </EntityType>
+        <EntityType Name="Village">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="District_id" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="District" Relationship="TO_QUOC_GHI_CONGModel.FK__Ward__District_i__33D4B598" FromRole="Village" ToRole="District" />
+          <NavigationProperty Name="Records" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Village" FromRole="Village" ToRole="Record" />
+          <NavigationProperty Name="Records1" Relationship="TO_QUOC_GHI_CONGModel.FK_Record_Village1" FromRole="Village" ToRole="Record" />
+          <NavigationProperty Name="RecordUpdateHistories" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Village" FromRole="Village" ToRole="RecordUpdateHistory" />
+          <NavigationProperty Name="RecordUpdateHistories1" Relationship="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Village1" FromRole="Village" ToRole="RecordUpdateHistory" />
+        </EntityType>
+        <Association Name="FK__DecisionC__UserC__797309D9">
+          <End Type="TO_QUOC_GHI_CONGModel.User" Role="User" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.DecisionCode" Role="DecisionCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DecisionCode">
+              <PropertyRef Name="UserCreateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_DecisionCode">
+          <End Type="TO_QUOC_GHI_CONGModel.DecisionCode" Role="DecisionCode" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DecisionCode">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="DecitionCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_DecisionCode">
+          <End Type="TO_QUOC_GHI_CONGModel.DecisionCode" Role="DecisionCode" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DecisionCode">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="DecitionCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_DefineTypeRecord">
+          <End Type="TO_QUOC_GHI_CONGModel.DefineTypeRecord" Role="DefineTypeRecord" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DefineTypeRecord">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="DefineTypeRecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__District__Provin__2A4B4B5E">
+          <End Type="TO_QUOC_GHI_CONGModel.Province" Role="Province" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.District" Role="District" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="District">
+              <PropertyRef Name="ProvinceCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ward__District_i__33D4B598">
+          <End Type="TO_QUOC_GHI_CONGModel.District" Role="District" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Village" Role="Village" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Village">
+              <PropertyRef Name="District_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_District">
+          <End Type="TO_QUOC_GHI_CONGModel.District" Role="District" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_District1">
+          <End Type="TO_QUOC_GHI_CONGModel.District" Role="District" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="RequesterDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_District">
+          <End Type="TO_QUOC_GHI_CONGModel.District" Role="District" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_District1">
+          <End Type="TO_QUOC_GHI_CONGModel.District" Role="District" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="District">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="RequesterDistrict" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupMedia_Groups">
+          <End Type="TO_QUOC_GHI_CONGModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.GroupMedia" Role="GroupMedia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupMedia">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupRecord_Groups1">
+          <End Type="TO_QUOC_GHI_CONGModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.GroupRecord" Role="GroupRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupRecord">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupRecord_Record1">
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.GroupRecord" Role="GroupRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Record">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupRecord">
+              <PropertyRef Name="RecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_GroupRecord">
+          <End Type="TO_QUOC_GHI_CONGModel.GroupRecord" Role="GroupRecord" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupRecord">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="GroupRecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification_Record">
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Record">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="RecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification_Users">
+          <End Type="TO_QUOC_GHI_CONGModel.User" Role="User" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Objects__UserCre__7B5B524B">
+          <End Type="TO_QUOC_GHI_CONGModel.User" Role="User" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Object" Role="Object" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Object">
+              <PropertyRef Name="UserCreateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Objects">
+          <End Type="TO_QUOC_GHI_CONGModel.Object" Role="Object" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ObjectID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="ObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Objects">
+          <End Type="TO_QUOC_GHI_CONGModel.Object" Role="Object" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="ObjectID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="ObjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Period__UserCrea__7A672E12">
+          <End Type="TO_QUOC_GHI_CONGModel.User" Role="User" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Period" Role="Period" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Period">
+              <PropertyRef Name="UserCreateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Period">
+          <End Type="TO_QUOC_GHI_CONGModel.Period" Role="Period" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="PeriodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Period">
+          <End Type="TO_QUOC_GHI_CONGModel.Period" Role="Period" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="PeriodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Position_Users">
+          <End Type="TO_QUOC_GHI_CONGModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Position" Role="Position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Position">
+              <PropertyRef Name="UserCreateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Position">
+          <End Type="TO_QUOC_GHI_CONGModel.Position" Role="Position" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Position">
+          <End Type="TO_QUOC_GHI_CONGModel.Position" Role="Position" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Province">
+          <End Type="TO_QUOC_GHI_CONGModel.Province" Role="Province" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Province1">
+          <End Type="TO_QUOC_GHI_CONGModel.Province" Role="Province" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="RequesterProvince" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Province">
+          <End Type="TO_QUOC_GHI_CONGModel.Province" Role="Province" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Province1">
+          <End Type="TO_QUOC_GHI_CONGModel.Province" Role="Province" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="RequesterProvince" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Province">
+          <End Type="TO_QUOC_GHI_CONGModel.Province" Role="Province" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Province">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Users">
+          <End Type="TO_QUOC_GHI_CONGModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="UserCreateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Village">
+          <End Type="TO_QUOC_GHI_CONGModel.Village" Role="Village" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Village">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="VilageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Village1">
+          <End Type="TO_QUOC_GHI_CONGModel.Village" Role="Village" Multiplicity="0..1" />
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Village">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="RequesterVilage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Record">
+          <End Type="TO_QUOC_GHI_CONGModel.Record" Role="Record" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Record">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="RecordID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Village">
+          <End Type="TO_QUOC_GHI_CONGModel.Village" Role="Village" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Village">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="VillageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecordUpdateHistory_Village1">
+          <End Type="TO_QUOC_GHI_CONGModel.Village" Role="Village" Multiplicity="1" />
+          <End Type="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Role="RecordUpdateHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Village">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecordUpdateHistory">
+              <PropertyRef Name="RequesterVilage" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TO_QUOC_GHI_CONGModelStoreContainer" CdmEntityContainer="TO_QUOC_GHI_CONGEntities">
+          <EntitySetMapping Name="Configs">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.Config">
+              <MappingFragment StoreEntitySet="Config">
+                <ScalarProperty Name="LockTime" ColumnName="LockTime" />
+                <ScalarProperty Name="WrongLoginTime" ColumnName="WrongLoginTime" />
+                <ScalarProperty Name="UserDecition" ColumnName="UserDecition" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DecisionCodes">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.DecisionCode">
+              <MappingFragment StoreEntitySet="DecisionCode">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserCreateID" ColumnName="UserCreateID" />
+                <ScalarProperty Name="tYear" ColumnName="tYear" />
+                <ScalarProperty Name="tMonth" ColumnName="tMonth" />
+                <ScalarProperty Name="tDate" ColumnName="tDate" />
+                <ScalarProperty Name="fYear" ColumnName="fYear" />
+                <ScalarProperty Name="fMonth" ColumnName="fMonth" />
+                <ScalarProperty Name="fDate" ColumnName="fDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DefineTypeRecords">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.DefineTypeRecord">
+              <MappingFragment StoreEntitySet="DefineTypeRecord">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Districts">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.District">
+              <MappingFragment StoreEntitySet="District">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ProvinceCode" ColumnName="ProvinceCode" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupMedias">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.GroupMedia">
+              <MappingFragment StoreEntitySet="GroupMedia">
+                <ScalarProperty Name="IsReject" ColumnName="IsReject" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupRecords">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.GroupRecord">
+              <MappingFragment StoreEntitySet="GroupRecord">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.Group">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="SubmitDate" ColumnName="SubmitDate" />
+                <ScalarProperty Name="UserCreateID" ColumnName="UserCreateID" />
+                <ScalarProperty Name="DecitionNumber" ColumnName="DecitionNumber" />
+                <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CerfiticateCode" ColumnName="CerfiticateCode" />
+                <ScalarProperty Name="DocumentPhase" ColumnName="DocumentPhase" />
+                <ScalarProperty Name="DocumentYear" ColumnName="DocumentYear" />
+                <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DecisionDate" ColumnName="DecisionDate" />
+                <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DefineTypeRecordID" ColumnName="DefineTypeRecordID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="CreadedDate" ColumnName="CreadedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IsReaded" ColumnName="IsReaded" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Objects">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.Object">
+              <MappingFragment StoreEntitySet="Objects">
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsGuerrilla" ColumnName="IsGuerrilla" />
+                <ScalarProperty Name="IsArmy" ColumnName="IsArmy" />
+                <ScalarProperty Name="UserCreateID" ColumnName="UserCreateID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Periods">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.Period">
+              <MappingFragment StoreEntitySet="Period">
+                <ScalarProperty Name="PrintingContent" ColumnName="PrintingContent" />
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="TimeLine" ColumnName="TimeLine" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserCreateID" ColumnName="UserCreateID" />
+                <ScalarProperty Name="tYear" ColumnName="tYear" />
+                <ScalarProperty Name="tMonth" ColumnName="tMonth" />
+                <ScalarProperty Name="tDate" ColumnName="tDate" />
+                <ScalarProperty Name="fYear" ColumnName="fYear" />
+                <ScalarProperty Name="fMonth" ColumnName="fMonth" />
+                <ScalarProperty Name="fDate" ColumnName="fDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.Position">
+              <MappingFragment StoreEntitySet="Position">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserCreateID" ColumnName="UserCreateID" />
+                <ScalarProperty Name="IsGuerrilla" ColumnName="IsGuerrilla" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsArmy" ColumnName="IsArmy" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provinces">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.Province">
+              <MappingFragment StoreEntitySet="Province">
+                <ScalarProperty Name="ProvinceCode" ColumnName="ProvinceCode" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Records">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.Record">
+              <MappingFragment StoreEntitySet="Record">
+                <ScalarProperty Name="ProvinceRequestID" ColumnName="ProvinceRequestID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="UserCreateID" ColumnName="UserCreateID" />
+                <ScalarProperty Name="sacrifice_year" ColumnName="sacrifice_year" />
+                <ScalarProperty Name="sacrifice_month" ColumnName="sacrifice_month" />
+                <ScalarProperty Name="sacrifice_date" ColumnName="sacrifice_date" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="DecitionNumber" ColumnName="DecitionNumber" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="RequesterAddress" ColumnName="RequesterAddress" />
+                <ScalarProperty Name="RequesterVilage" ColumnName="RequesterVilage" />
+                <ScalarProperty Name="RequesterDistrict" ColumnName="RequesterDistrict" />
+                <ScalarProperty Name="RequesterProvince" ColumnName="RequesterProvince" />
+                <ScalarProperty Name="RequesterRelation" ColumnName="RequesterRelation" />
+                <ScalarProperty Name="RequesterResion" ColumnName="RequesterResion" />
+                <ScalarProperty Name="RequesterPhone" ColumnName="RequesterPhone" />
+                <ScalarProperty Name="RequesterName" ColumnName="RequesterName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsPrint" ColumnName="IsPrint" />
+                <ScalarProperty Name="ReasionReject" ColumnName="ReasionReject" />
+                <ScalarProperty Name="IsReject" ColumnName="IsReject" />
+                <ScalarProperty Name="DecitionDate" ColumnName="DecitionDate" />
+                <ScalarProperty Name="DecitionCodeID" ColumnName="DecitionCodeID" />
+                <ScalarProperty Name="CerfiticateNumber" ColumnName="CerfiticateNumber" />
+                <ScalarProperty Name="CerfiticateCode" ColumnName="CerfiticateCode" />
+                <ScalarProperty Name="PeriodID" ColumnName="PeriodID" />
+                <ScalarProperty Name="SacrificeDate" ColumnName="SacrificeDate" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="VilageID" ColumnName="VilageID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+                <ScalarProperty Name="MartyrsName" ColumnName="MartyrsName" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecordUpdateHistories">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.RecordUpdateHistory">
+              <MappingFragment StoreEntitySet="RecordUpdateHistory">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="UserUpdateID" ColumnName="UserUpdateID" />
+                <ScalarProperty Name="RequesterAddress" ColumnName="RequesterAddress" />
+                <ScalarProperty Name="RequesterVilage" ColumnName="RequesterVilage" />
+                <ScalarProperty Name="RequesterDistrict" ColumnName="RequesterDistrict" />
+                <ScalarProperty Name="RequesterProvince" ColumnName="RequesterProvince" />
+                <ScalarProperty Name="RequesterRelation" ColumnName="RequesterRelation" />
+                <ScalarProperty Name="RequesterResion" ColumnName="RequesterResion" />
+                <ScalarProperty Name="RequesterPhone" ColumnName="RequesterPhone" />
+                <ScalarProperty Name="RequesterName" ColumnName="RequesterName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="GroupRecordID" ColumnName="GroupRecordID" />
+                <ScalarProperty Name="IsPrint" ColumnName="IsPrint" />
+                <ScalarProperty Name="ReasionReject" ColumnName="ReasionReject" />
+                <ScalarProperty Name="IsReject" ColumnName="IsReject" />
+                <ScalarProperty Name="DecitionDate" ColumnName="DecitionDate" />
+                <ScalarProperty Name="DecitionCodeID" ColumnName="DecitionCodeID" />
+                <ScalarProperty Name="DecitionNumber" ColumnName="DecitionNumber" />
+                <ScalarProperty Name="CerfiticateNumber" ColumnName="CerfiticateNumber" />
+                <ScalarProperty Name="CerfiticateCode" ColumnName="CerfiticateCode" />
+                <ScalarProperty Name="PeriodID" ColumnName="PeriodID" />
+                <ScalarProperty Name="SacrificeDate" ColumnName="SacrificeDate" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="VillageID" ColumnName="VillageID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+                <ScalarProperty Name="MartyrsName" ColumnName="MartyrsName" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="TimeOutLogin" ColumnName="TimeOutLogin" />
+                <ScalarProperty Name="DayLogin" ColumnName="DayLogin" />
+                <ScalarProperty Name="CountLogin" ColumnName="CountLogin" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="ResetPasswordExprice" ColumnName="ResetPasswordExprice" />
+                <ScalarProperty Name="ResetPassword" ColumnName="ResetPassword" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="WrongLoginAmount" ColumnName="WrongLoginAmount" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Villages">
+            <EntityTypeMapping TypeName="TO_QUOC_GHI_CONGModel.Village">
+              <MappingFragment StoreEntitySet="Village">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="District_id" ColumnName="District_id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

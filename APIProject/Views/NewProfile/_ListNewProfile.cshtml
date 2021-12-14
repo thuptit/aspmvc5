@@ -1,0 +1,506 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@using Data.Utils
+@using PagedList.Mvc
+@using PagedList
+@model IPagedList<NewProfileModel>
+<div class="col-6 mt-2 ">
+    <span>Kết quả lọc : </span><label> @Model.TotalItemCount</label>
+</div>
+<div class=" col-6 mt-2  text-right dropdowntx">
+    <span>Hành động</span>  <span class="text-primary border " style="width:17px;height:17px;border:2px;border-radius:50px;cursor:pointer">  <i class="fa fa-ellipsis-h ml-1 mr-1"></i></span>
+    <div class="dropdown-content">
+        <a href="#" title="Xóa." onclick=" DeleteNewProfile();"><i class="fa fa-trash btnDelete"></i></a>
+    </div>
+</div>
+
+<table class=" table  table-bordered  table-responsive mt-2" id="tbl-newProfile">
+    <thead>
+        <tr class="text-center">
+            <th><input type="checkbox" name="name" value="" /></th>
+            <th>STT</th>
+            @*<th>Mã hồ sơ</th>*@
+            <th>Họ tên liệt sĩ</th>
+            <th>Chức vụ</th>
+            <th>Đối tượng</th>
+            <th>Nguyên quán (xã, huyện)</th>
+            <th>Nguyên quán (tỉnh)</th>
+            <th>Ngày hy sinh</th>
+            <th>Tháng hy sinh</th>
+            <th>Năm hy sinh</th>
+            <th>Thời kỳ</th>
+            <th>Ký hiệu bằng</th>
+            <th>Số bằng</th>
+            <th>Số QĐ</th>
+            <th>Ngày QĐ</th>
+            <th>Tháng QĐ</th>
+            <th>Năm QĐ</th>
+            <th>Nhóm hồ sơ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() <= 0)
+        {
+            <tr><td colspan="19" class="text-center">Không có dữ liệu.</td></tr>
+        }
+        else
+        {
+            int stt = (Model.PageNumber - 1) * Model.PageSize + 1;
+            foreach (var item in Model)
+            {
+                if (@item.CerfiticateNumber == null)
+                {
+                    <tr class="text-center" onblur="updateNewProfileTbl(@item.ID);">
+                        <td><input type="checkbox" class="idNewProfile text-primary" name="name" value="@item.ID" onblur="updateNewProfileTbl(@item.ID);" /> <br /> <i class="fa fa-fw fa-edit text-success" onclick="window.location='/NewProfile/NewProfileDetail?ID=@item.ID'"></i></td>
+                        <td style="text-align: center;">@stt</td>
+                        @*<td><input class="form-control" type="text" style="border:none" value="@item.Number" id="number_@item.ID" onblur="updateNewProfileTbl(@item.ID);" /></td>*@
+                        <td><textarea class="text-center form-control" type="text" style="border:none" value="@item.MartyrsName" size="20" id="martyrsName_@item.ID" onblur="updateNewProfileTbl(@item.ID);">@item.MartyrsName</textarea></td>
+
+                        <td><input type="text" class="text-center form-control position" id="position_@item.ID" value="@item.NamePosition" style="border:none" onblur="updateNewProfileTbl(@item.ID);" /></td>
+                        <td>
+                            <select class="form-control chosen-select" id="object_@item.ID" title="Đối tượng" onblur="updateNewProfileTbl(@item.ID);">
+                                <option value="" selected disabled> </option>
+                                @foreach (var objects in ViewBag.Object)
+                                {
+                                    if (objects.ObjectID == item.ObjectID)
+                                    {
+                                        <option value="@objects.ObjectID" selected>@objects.Code</option>
+                                        continue;
+                                    }
+                                    <option value="@objects.ObjectID">@objects.Code</option>
+                                }
+                            </select>
+                        </td>
+                        <td><textarea class="text-center form-control" type="text" style="border:none" value="@item.Address" size="20" id="address_@item.ID" onblur="updateNewProfileTbl(@item.ID);">@item.Address</textarea></td>
+                        <td>
+
+                            <select class="form-control  chosen-select" id="province_@item.ID" title="Tỉnh/ thành phố" onblur="updateNewProfileTbl(@item.ID);">
+                                <option value="" selected disabled> </option>
+                                @foreach (var province in ViewBag.Province)
+                                {
+                                    if (province.Code == item.ProvinceID)
+                                    {
+                                        <option value="@province.Code" selected>@province.Name</option>
+                                        continue;
+                                    }
+                                    <option value="@province.Code">@province.Name</option>
+                                }
+                            </select>
+                        </td>
+                        @{ if (item.sacrifice_date != null && item.sacrifice_date <= 9)
+                            {
+                                var str = "0" + item.sacrifice_date.Value.ToString();
+                                <td><input class="form-control" type="text" style="border:none" value="@str" size="10" id="sacrificeDay_@item.ID" onblur="updateNewProfileTbl(@item.ID);" /></td>
+                            }
+                            else if (item.sacrifice_date != null && item.sacrifice_date >= 10)
+                            {
+                                <td><input class="form-control" type="text" style="border:none" value="@item.sacrifice_date" size="10" id="sacrificeDay_@item.ID" onblur="updateNewProfileTbl(@item.ID);" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="form-control" type="text" style="border:none" value="0" size="10" id="sacrificeDay_@item.ID" onblur="updateNewProfileTbl(@item.ID);" /></td>
+                            } }
+                        @{ if (item.sacrifice_month != null && item.sacrifice_month <= 2)
+                            {
+                                var str = "0" + item.sacrifice_month.Value.ToString();
+                                <td><input class="form-control" type="text" style="border:none" value="@str" size="10" id="sacrificeMonth_@item.ID" onblur="updateNewProfileTbl(@item.ID);" /></td>
+                            }
+                            else if (item.sacrifice_month != null && item.sacrifice_month >= 3)
+                            {
+                                <td><input class="form-control" type="text" style="border:none" value="@item.sacrifice_month" size="10" id="sacrificeMonth_@item.ID" onblur="updateNewProfileTbl(@item.ID);" /></td>
+                            }
+                            else if (item.sacrifice_month != null && item.sacrifice_month >= 3)
+                            {
+                                <td><input class="form-control" type="text" style="border:none" value="@item.sacrifice_month" size="10" id="sacrificeMonth_@item.ID" onblur="updateNewProfileTbl(@item.ID);" /></td>
+                            }
+                            else
+                            {
+                                <td><input class="form-control" type="text" style="border:none" value="0" size="10" id="sacrificeMonth_@item.ID" onblur="updateNewProfileTbl(@item.ID);" /></td>
+                            } }
+                        @{ if (item.sacrifice_year == null)
+                            {
+                                <td>0</td>
+                            }
+                            else
+                            {
+                                <td><input class="form-control" type="text" style="border:none" value="@item.sacrifice_year" size="10" id="sacrificeYear_@item.ID" onblur="updateNewProfileTbl(@item.ID);" /></td>
+                            } }
+                        <td>
+                            <select class="form-control" id="period_@item.ID" onblur="updateNewProfileTbl(@item.ID);" style="border:none;">
+                                <option value="" selected disabled> </option>
+                                @foreach (Data.DB.Period obj in (List<Period>)ViewBag.PeriodNP)
+                                {
+                                    if (obj.ID == item.PeriodID)
+                                    {
+                                        <option value="@obj.ID" selected>
+                                            @obj.Code
+                                        </option>
+                                        continue;
+                                    }
+                                    <option value="@obj.ID">
+                                        @obj.Code
+                                    </option>
+                                }
+                            </select>
+                        </td>
+                        <td>@item.CerfiticateCode</td>
+                        <td>@item.CerfiticateNumber</td>
+                        @{ if (item.DecitionCodeID != null)
+                            {
+                                <td>@item.DecitionNumber/@item.codeDecisionCode</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            } }
+                        @{ if (item.DecitionDate.HasValue)
+                            {
+                                if (item.DecitionDate.Value.Day != null && item.DecitionDate.Value.Day <= 9)
+                                {
+                                    var str = "0" + item.DecitionDate.Value.Day.ToString();
+                                    <td><input class="form-control" type="text" style="border:none" value="@str" size="10" id="day_@item.ID" /></td>
+                                }
+                                else if (item.DecitionDate.Value.Day != null && item.DecitionDate.Value.Day >= 10)
+                                {
+                                    <td><input class="form-control" type="text" style="border:none" value="@item.DecitionDate.Value.Day" id="day_@item.ID" /></td>
+                                }
+                                else
+                                {
+                                    <td><input class="form-control" type="text" style="border:none" value="0" id="day_@item.ID" /></td>
+                                }
+                                //tháng
+                                if (item.DecitionDate.Value.Month != null && item.DecitionDate.Value.Month <= 2)
+                                {
+                                    var str = "0" + item.DecitionDate.Value.Month.ToString();
+                                    <td><input class="form-control" type="text" style="border:none" value="@str" id="month_@item.ID" /></td>
+                                }
+                                else if (item.DecitionDate.Value.Month != null && item.DecitionDate.Value.Month >= 3)
+                                {
+                                    <td><input class="form-control" type="text" style="border:none" value="@item.DecitionDate.Value.Month" size="10" id="month_@item.ID" /></td>
+                                }
+                                else
+                                {
+                                    <td><input class="form-control" type="text" style="border:none" value="0" id="month_@item.ID" /></td>
+                                } @*<td>@item.DecitionDate.Value.Day</td>*@ @*<td>@item.DecitionDate.Value.Month</td>*@
+                                <td>@item.DecitionDate.Value.Year</td>
+                            }
+                            else
+                            {
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            } }
+                        <td>@item.GroupName</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="text-center" @*onblur="updateNewProfileTbl(@item.ID);"*@>
+                        <td><input type="checkbox" class="idNewProfile text-primary" name="name" value="@item.ID" @*onblur="updateNewProfileTbl(@item.ID);"*@ /> <br /> <i class="fa fa-fw fa-edit text-success" onclick="window.location='/NewProfile/NewProfileDetail?ID=@item.ID'"></i></td>
+                        <td style="text-align: center;">@stt</td>
+                        @*<td><input class="form-control" type="text" style="border:none" value="@item.Number" id="number_@item.ID" onblur="updateNewProfileTbl(@item.ID);" /></td>*@
+                        <td>@item.MartyrsName</td>
+
+                        <td>@item.NamePosition</td>
+                        <td>
+                            @item.ObjectCode
+                            @*<select class="form-control chosen-select" id="object_@item.ID" title="Đối tượng">
+                                    <option value="" selected disabled> </option>
+                                    @foreach (var objects in ViewBag.Object)
+                                    {
+                                        if (objects.ObjectID == item.ObjectID)
+                                        {
+                                            <option value="@objects.ObjectID" selected>@objects.Code</option>
+                                            continue;
+                                        }
+                                        <option value="@objects.ObjectID">@objects.Code</option>
+                                    }
+                                </select>*@
+                        </td>
+                        <td>@item.Address</td>
+                        <td>
+                            @item.NameProvince
+
+                            @*<select class="form-control  chosen-select" id="province_@item.ID" title="Tỉnh/ thành phố">
+                                    <option value="" selected disabled> </option>
+                                    @foreach (var province in ViewBag.Province)
+                                    {
+                                        if (province.Code == item.ProvinceID)
+                                        {
+                                            <option value="@province.Code" selected>@province.Name</option>
+                                            continue;
+                                        }
+                                        <option value="@province.Code">@province.Name</option>
+                                    }
+                                </select>*@
+                        </td>
+                        @{
+                            if (item.sacrifice_date != null && item.sacrifice_date <= 9)
+                            {
+                                var str = "0" + item.sacrifice_date.Value.ToString();
+                                <td>@str</td>
+                            }
+                            else if (item.sacrifice_date != null && item.sacrifice_date >= 10)
+                            {
+                                <td>@item.sacrifice_date</td>
+                            }
+                            else
+                            {
+                                <td>0</td>
+                            }
+
+                        }
+                        @{
+                            if (item.sacrifice_month != null && item.sacrifice_month <= 2)
+                            {
+                                var str = "0" + item.sacrifice_month.Value.ToString();
+                                <td>@str</td>
+                            }
+                            else if (item.sacrifice_month != null && item.sacrifice_month >= 3)
+                            {
+                                <td>@item.sacrifice_month</td>
+                            }
+                            else if (item.sacrifice_month != null && item.sacrifice_month >= 3)
+                            {
+                                <td>@item.sacrifice_month</td>
+                            }
+                            else
+                            {
+                                <td>0</td>
+                            }
+
+                        }
+                        @{
+                            if (item.sacrifice_year == null)
+                            {
+                                <td>0</td>
+                            }
+                            else
+                            {
+                                <td>@item.sacrifice_year</td>
+                            }
+                        }
+                        <td>
+                            @item.PeriodCode
+                            @*<select class="form-control" id="period_@item.ID" onblur="updateNewProfileTbl(@item.ID);" style="border:none;">
+                                    <option value="" selected disabled> </option>
+                                    @foreach (Data.DB.Period obj in (List<Period>)ViewBag.PeriodNP)
+                                    {
+                                        if (obj.ID == item.PeriodID)
+                                        {
+                                            <option value="@obj.ID" selected>
+                                                @obj.Code
+                                            </option>
+                                            continue;
+                                        }
+                                        <option value="@obj.ID">
+                                            @obj.Code
+                                        </option>
+                                    }
+                                </select>*@
+                        </td>
+                        <td>@item.CerfiticateCode</td>
+                        <td>@item.CerfiticateNumber</td>
+                        @{
+                            if (item.DecitionCodeID != null)
+                            {
+                                <td>@item.DecitionNumber/@item.codeDecisionCode</td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+                        @{
+                            if (item.DecitionDate.HasValue)
+                            {
+                                if (item.DecitionDate.Value.Day != null && item.DecitionDate.Value.Day <= 9)
+                                {
+                                    var str = "0" + item.DecitionDate.Value.Day.ToString();
+                                    <td>@str</td>
+                                }
+                                else if (item.DecitionDate.Value.Day != null && item.DecitionDate.Value.Day >= 10)
+                                {
+                                    <td>@item.DecitionDate.Value.Day</td>
+                                }
+                                else
+                                {
+                                    <td>0</td>
+                                }
+                                //tháng
+                                if (item.DecitionDate.Value.Month != null && item.DecitionDate.Value.Month <= 2)
+                                {
+                                    var str = "0" + item.DecitionDate.Value.Month.ToString();
+                                    <td>@str</td>
+                                }
+                                else if (item.DecitionDate.Value.Month != null && item.DecitionDate.Value.Month >= 3)
+                                {
+                                    <td>@item.DecitionDate.Value.Month</td>
+                                }
+                                else
+                                {
+                                    <td>0</td>
+                                }
+
+                                @*<td>@item.DecitionDate.Value.Day</td>*@
+                                @*<td>@item.DecitionDate.Value.Month</td>*@
+                                <td>@item.DecitionDate.Value.Year</td>
+                            }
+                            else
+                            {
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            }
+                        }
+                        <td>@item.GroupName</td>
+                    </tr>
+                }
+                stt++;
+            }
+        }
+    </tbody>
+</table>
+
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(
+        Model,
+        page => Url.Action("SearchNewProfile", "NewProfile", new { page, createdate = ViewBag.createdate, district = ViewBag.district, village = ViewBag.village, provice = ViewBag.provice, period = ViewBag.period, yeard = ViewBag.yeard, yeardecision = ViewBag.yeardecision, position = ViewBag.position, cerfiticate = ViewBag.cerfiticate, groupprofile = ViewBag.groupprofile, codename = ViewBag.codename }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            UpdateTargetId = "_listnewprofile"
+        })
+        )
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".position").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/NewProfile/lPosition",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { value: item.Name };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+    function updateNewProfileTbl(Id) {
+        $.ajax({
+            url: '/NewProfile/updateNewProfileTbl',
+            data: { ID: Id, Number: $('#number_' + Id).val(), MartyrsName: $('#martyrsName_' + Id).val(), PositionName: $("#position_" + Id).val(), ObjectId: $('#object_' + Id).val(), Address: $('#address_' + Id).val(), ProvinceId: $('#province_' + Id).val(), Day: $('#sacrificeDay_' + Id).val(), Month: $('#sacrificeMonth_' + Id).val(), Year: $('#sacrificeYear_' + Id).val(), PeriodId: $('#period_' + Id).val() },
+            success: function (res) {
+                if (res == SUCCESS) {
+                    console.log("Lưu thành công!")
+                }
+                else {
+                    alert("Không thể thực hiện!")
+                }
+            }
+        });
+    }
+    function CreateNewProfile() {
+        var createnames = $("#createnames").val();
+        var createposition = $("#createposition").val();
+        var createobject = $("#createobject").val();
+        var province = $("#province").val();
+        var district = $("#district").val();
+        var village = $("#village").val();
+        var ddate = $("#ddate").val();
+        var dmonth = $("#dmonth").val();
+        var dyear = $("#dyear").val();
+        var period = $("#periodcreate").val();
+        var address = $("#Address").val();
+        var Number = $("#Number").val();
+        var provinceRequestID = $("#ProvinceRequestID").val();
+        //if (createnames == "") {
+        //    swal("Cảnh báo!", "Xin mời nhập tên liệt sĩ!", "warning");
+        //    return;
+        //} else if (createposition == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn chức vụ!", "warning");
+        //    return;
+        //} else if (createobject == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn đối tượng!", "warning");
+        //    return;
+        //} else if (province == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn tỉnh/ thành phố!", "warning");
+        //    return;
+        //}
+        //else if (district == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn quận huyện!", "warning");
+        //    return;
+        //}
+        //else if (village == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn phường xã!", "warning");
+        //    return;
+        //}
+        //else if (period == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn thời kỳ!", "warning");
+        //    return;
+        //}
+        $.ajax({
+            url: "/NewProfile/CreateNewProfile",
+            data: { createname: createnames, createposition: createposition, createobject: createobject, province: province, district: district, village: village, ddate: ddate, dmonth: dmonth, dyear: dyear, period: period, address: address, Number: Number, provinceRequestID: provinceRequestID },
+            success: function (rs) {
+                if (rs == 1)
+                    swal("Thành công!", "Thêm mới hồ sơ thành công!", "success");
+                else if (rs == 501)
+                    swal("Thất bại!", "Thêm mới hồ sơ thất bại!", "error");
+                SearchNewProfile();
+                $("#md-add-profile").modal('hide');
+            }
+        });
+    }
+    //Xoá hồ sơ
+    function DeleteNewProfile() {
+        var ID = "";
+        $('.idNewProfile:checkbox:checked').each(function (i) {
+            ID += $(this).val() + ",";
+        });
+        swal({
+            title: "Bạn có chắc muốn xóa hồ sơ không?",
+            icon: "warning",
+            buttons: ["Hủy", true],
+            dangerMode: ["Xóa", true],
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "/NewProfile/DeleteNewProfile",
+                        data: { ID: ID },
+                        success: function (rs) {
+                            debugger;
+                            //if (rs == 1)
+                            //    swal("Thành công!", "Xóa hồ sơ thành công!", "success");
+                            //else if (rs == 501)
+                            //    swal("Thất bại!", "Xóa hồ sơ thất bại", "error");
+                            //SearchNewProfile();
+                            swal({
+                                title: rs.Message,
+                                icon: rs.Status == SUCCESS ? 'success' : 'error'
+                            }).then((rp) => {
+                                if (rp) {
+                                    SearchNewProfile();
+                                }
+                            })
+                        }
+                    });
+                }
+            });
+
+    }
+</script>

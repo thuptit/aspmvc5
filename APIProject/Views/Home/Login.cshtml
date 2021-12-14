@@ -1,0 +1,166 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="~/Content/images/logonew_M52_1.ico">
+    <title>NCC</title>
+    @Styles.Render("~/dekko/css")
+    @Scripts.Render("~/layout/js")
+    @Scripts.Render("~/dekko/js")
+    @Scripts.Render("~/bundle/js")
+    <link href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/fonts/iconic/css/material-design-iconic-font.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/animsition/css/animsition.min.css" rel="stylesheet" />
+
+    <link href="~/Content/vendor/select2/select2.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/main.js"></script>
+    <link href="~/Content/mainlogin.css" rel="stylesheet" />
+    @*<link href="~/Content/Login.css" rel="stylesheet" />*@
+    <link href="~/Content/util.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('/Content/images/backgroundlogin.png'); ">
+        
+            <div class="wrap-login100">
+                <div class="login100-form validate-form">
+                    <span class="login100-form-logo">
+
+                        <img src="~/Content/images/Logonew.png" style="width:100px;" />
+                    </span>
+                  
+
+                    <div class="wrap-input100 validate-input " data-validate="Enter username">
+                        <input class="input100" type="text" name="username" placeholder="Tên đăng nhập" id="txtAccount">
+                        <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <input class="input100" type="password" name="pass" placeholder="Mật khẩu" id="txtPassword">
+                        <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn p-t-2">
+                        <button class="login100-form-btn" id="btnLogin">
+                            Đăng Nhập
+                        </button>
+                    </div>
+
+                    <div class="text-center p-t-30">
+                        <a class="txt1" href="#">
+
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="modalLoad" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content text-center py-3">
+                <div class="modal-body text-center">
+                    <i class="fa fa-spinner text-success fa-spin" style="font-size: 40px;"></i>
+                    <div class="col-md-12 text-center mt-2">
+                        <span>Đang xử lý</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#txtUsernameLogin").focus();
+        $("#btnLogin").click(function () {
+            if (!navigator.onLine) {
+                swal({
+                    title: "Kiểm tra kết nối internet!",
+                    text: "",
+                    icon: "warning"
+                })
+                return;
+            }
+            var account = $("#txtAccount").val().trim();
+            var password = $("#txtPassword").val().trim();
+            if (account.length <= 0 || password.length < 0) {
+                swal({
+                    title: "Mời nhập đầy đủ thông tin! ",
+                    icon: "warning"
+                });
+            }
+            else {
+                $.ajax({
+                    url: "/Home/UserLogin",
+                    type: "POST",
+                    data: {
+                        account: account,
+                        password: password
+                    }, beforeSend: function () {
+                        $("#modalLoad").modal("show");
+                    }
+                    , success: function (res) {
+                        $("#modalLoad").modal("hide");
+                        if (res == 1) {
+                            window.location = "/Home/Index";
+                        }
+                        else if (res == 2) {
+                            swal({
+                                title: "Tài khoản hoặc mật khẩu không chính xác !",
+                                text: "",
+                                icon: "warning"
+                            })
+                        }
+                        else if (res == 0) {
+                            swal({
+                                title: "Tài khoản đã ngừng hoạt động !",
+                                text: "",
+                                icon: "warning"
+                            })
+                        }
+                        else if (res == 1000) {
+                            swal({
+                                title: "Bạn đăng nhập sai số lần quy định, tài khoản tạm thời bị khóa !",
+                                text: "",
+                                icon: "warning"
+                            })
+                        }
+                        else {
+                            swal({
+                                title: "Lỗi hệ thống!",
+                                text: "",
+                                icon: "warning"
+                            })
+                        }
+
+                    }
+                    , error: function () {
+                        $("#modalLoad").modal("hide");
+                    }
+                })
+            }
+
+
+        })
+
+        $('#txtPassword').keypress(function (e) {
+            var key = e.which;
+            if (key == 13) {
+                $("#btnLogin").click();
+            }
+        });
+
+    });
+
+</script>

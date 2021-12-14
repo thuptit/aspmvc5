@@ -1,0 +1,15 @@
+﻿@using Data.Model.APIWeb
+
+<select class="form-control" onchange="searchVillage();" id="sltDistrictV">
+    <option value="-1" selected disabled>Tất cả quận huyện</option>
+    @{
+        if ((List<ListDistrict>)ViewBag.ListDistrict != null)
+        {
+            foreach (var i in (List<ListDistrict>)ViewBag.ListDistrict)
+            {
+                <option value="@i.ID">@i.Name</option>
+            }
+        }
+    }
+</select>
+

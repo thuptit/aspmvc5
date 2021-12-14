@@ -1,0 +1,51 @@
+﻿@using Data.Model.APIWeb
+@model GetInformationDistrictDetail
+
+<div id="editDistrict" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sửa quận huyện</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mt-2">
+                    <div class="col-3">
+                        <label>Chọn tỉnh thành</label>
+                    </div>
+                    <div class="col-6">
+                        <select class="form-control mt-2" id="sltEditDistrict">
+                            @{
+                                foreach (var i in (List<ListProvince>)ViewBag.ListProvince)
+                                {
+                                    if (Model.ProID == i.Code)
+                                    {
+                                        <option value="@i.Code" selected>@i.ProvinceName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i.Code">@i.ProvinceName</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-3">
+                        <label>Tên quận huyện</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="txtEditDistrict" value="@Model.Name"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="saveDistrict(@Model.ID)"><i class="fa fa-check"></i> Lưu</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+﻿@using Data.DB
+@using Data.Model.APIWeb
+@using Data.Utils
+@using PagedList.Mvc
+@using PagedList
+@model IPagedList<VillageOutputModel>
+
+<div class="col-6 mt-2 ">
+    <span>Kết quả lọc : </span><label>@Model.TotalItemCount</label>
+</div>
+<div class=" col-6 mt-2">
+    <div class="row">
+        <div class="col-3 dropdowntx">
+            <span>Hành động</span>
+            <span class="text-primary border" style="width:17px;height:17px;border:2px solid #CCCCCC;border-radius:60px;cursor:pointer"> <i class="fa fa-ellipsis-h ml-1 mr-1"></i></span>
+            <div class="dropdown-content">
+                <a href="#" title="Xóa." onclick="deleteVillage();"><i class="fa fa-trash btnDelete"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<table class=" table table-active table-bordered table-hover table-striped table-responsive-md table-responsive-sm  mt-2" id="tblVillage">
+    <thead>
+        <tr>
+            <th><input type="checkbox" name="name" value="" id="checkAllVillage"/></th>
+            <th>STT</th>
+            <th>Tên phường/ xã</th>
+            <th>Tên quận/ huyện</th>
+            <th>Tên tỉnh/ thành phố</th>
+            <th>Người tạo</th>
+            <th>Ngày tạo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model.Count() == 0)
+            {
+                <tr><td colspan="8" class="text-center">Không có dữ liệu.</td></tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var dt in Model)
+                {
+    <tr>
+        <td><input type="checkbox" name="name" value="" class="isCheckedVillage" /></td>
+        <td>@stt</td>
+        <td  onclick="getInformationVillage(@dt.ID,@dt.ProvinceID);">@dt.Name</td>
+        <td onclick="getInformationVillage(@dt.ID,@dt.ProvinceID);">@dt.DistrictName</td>
+        <td onclick="getInformationVillage(@dt.ID,@dt.ProvinceID);">@dt.ProvinceName</td>
+        <td onclick="getInformationVillage(@dt.ID,@dt.ProvinceID);">Quản trị viên</td>
+        <td onclick="getInformationVillage(@dt.ID,@dt.ProvinceID);">@dt.CreatedDate.ToString("dd/MM/yyyy")</td>
+        <td onclick="getInformationVillage(@dt.ID,@dt.ProvinceID);" style="display:none;"><input type="text" value="@dt.ID" class="VillageId" /></td>
+        <td onclick="getInformationVillage(@dt.ID,@dt.ProvinceID);" style="display:none;"><input type="text" value="@dt.ProvinceID" class="VillagePId" /></td>
+    </tr>
+                    stt++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @*phân trang*@
+        @Html.PagedListPager(
+        Model,
+        page => Url.Action("SearchVillage", "Village", new { Page = page, status = ViewBag.status, provinceID = ViewBag.provinceID, districtID = ViewBag.districtID, name = ViewBag.name }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+        {
+            HttpMethod = "GET",
+            UpdateTargetId = "tbl-village"
+        })
+        )
+    </div>
+</div>
+
+<script>
+    $("#checkAllVillage").click(function () {
+        $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+    });
+
+    $("input[type=checkbox]").click(function () {
+        if (!$(this).prop("checked")) {
+            $("#checkAllVillage").prop("checked", false);
+        }
+    });
+    function deleteVillage() {
+        var str = "";
+        $("#tblVillage tbody tr").each(function (row) {
+            if ($(this).find('.isCheckedVillage').is(':checked', true)) {
+                str = str + $(this).find('.VillageId').val() + ',';
+            }
+        });
+        if (str == "") {
+            swal("Vui lòng chọn ô để xóa!", "", "warning");
+            return;
+        }
+        swal({
+            title: "Bạn có chắc muốn xóa?",
+            icon: "warning",
+            buttons: ["Hủy", true],
+            dangerMode: ["Tiếp tục", true],
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: '/Village/DeleteVillage',
+                        data: { Str: str },
+                        type: 'POST',
+                        success: function (res) {
+                            if (res == SUCCESS) {
+                                swal("Xóa thành công!", "", "success");
+                                searchVillage();
+                            }
+                            else {
+                                swal("Có lỗi xảy ra!", "Vui lòng thử lại", "warning");
+                            }
+                        }
+                    });
+                }
+            });
+        
+    }
+    function getInformationVillage(id,code) {
+        $.ajax({
+            url: '/Village/GetDetailVillage',
+            data: { ID: id, Code: code },
+            type: 'POST',
+            success: function (res) {
+                $('#updateVillage').html(res);
+                $('#editVillage').modal("show");
+            }
+        });
+    }
+</script>

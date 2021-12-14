@@ -1,0 +1,269 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Model.APIWeb
+@using Data.Utils;
+<div class="row mt-5 card-body" style="background-color:white;border-radius:10px">
+    <div class="col-md-12 sm-12 mt-2 ">
+        <div class="text-dark">
+            <h4><i class=" mt-1 mb-2"></i> Tổng quan</h4>
+        </div>
+    </div>
+</div>
+@{
+    if (ViewBag.Role == SystemParam.ROLE_ADMIN)
+    {
+        <div class="row">
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row  card-body" style="background-color:white;border-radius:10px;height:150px">
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Hồ sơ</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countRecord</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-book"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Hồ sơ thẩm định</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countPending</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-check-circle-o"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Hồ sơ từ chối</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countReject</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-ban"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Người dùng</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countUser</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-user-circle-o"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (ViewBag.Role == SystemParam.ROLE_USER_DEPARTMENT)
+    {
+        <div class="row">
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row  card-body" style="background-color:white;border-radius:10px;height:150px">
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Nhóm hồ sơ</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countGroupRecord</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-book"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Hồ sơ cấp lại</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countRenewRecord</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-check-circle-o"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Hồ sơ trình cấp</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countRecordUserPending</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-ban"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Hồ sơ bị từ chối</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countRecordUserReject</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-user-circle-o"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (ViewBag.Role == SystemParam.ROLE_USER_POLICY_1)
+    {
+        <div class="row">
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row  card-body" style="background-color:white;border-radius:10px;height:150px">
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Hồ sơ cấp lại đã trình</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countRenew1</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-book"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Hồ sơ cấp lại chưa trình</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countRenew2</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-check-circle-o"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Hồ sơ cấp mới đã trình</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countNew1</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-ban"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+
+                    <div class="col-12">
+                        <p style="font-size:20px"><b>Hồ sơ cấp mới chưa trình</b></p>
+                    </div>
+
+                    <div class="col-6">
+                        <span style="font-size:35px" class="text-danger">@ViewBag.countNew2</span>
+                    </div>
+                    <div class="col-6 text-center ">
+                        <span style="font-size:40px" class="text-secondary"><i class=" fa fa-user-circle-o"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @*else if (ViewBag.Role == SystemParam.ROLE_USER_DEPARTMENT)
+        {
+            <div class="row">
+                <div class="col-md-3 col-sm-12 mt-2">
+                    <div class="row  card-body" style="background-color:white;border-radius:10px;height:150px">
+                        <div class="col-12">
+                            <p style="font-size:20px"><b>Nhóm hồ sơ</b></p>
+                        </div>
+
+                        <div class="col-6">
+                            <span style="font-size:35px" class="text-danger">@ViewBag.countRecord</span>
+                        </div>
+                        <div class="col-6 text-center ">
+                            <span style="font-size:40px" class="text-secondary"><i class=" fa fa-book"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 mt-2">
+                    <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+                        <div class="col-12">
+                            <p style="font-size:20px"><b>Hồ sơ cấp lại</b></p>
+                        </div>
+
+                        <div class="col-6">
+                            <span style="font-size:35px" class="text-danger">@ViewBag.countReject</span>
+                        </div>
+                        <div class="col-6 text-center ">
+                            <span style="font-size:40px" class="text-secondary"><i class=" fa fa-check-circle-o"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 mt-2">
+                    <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+                        <div class="col-12">
+                            <p style="font-size:20px"><b>Hồ sơ đang trình cấp</b></p>
+                        </div>
+
+                        <div class="col-6">
+                            <span style="font-size:35px" class="text-danger">@ViewBag.countProfile</span>
+                        </div>
+                        <div class="col-6 text-center ">
+                            <span style="font-size:40px" class="text-secondary"><i class=" fa fa-ban"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 mt-2">
+                    <div class="row ml-md-1  card-body" style="background-color:white;border-radius:10px;height:150px">
+
+                        <div class="col-12">
+                            <p style="font-size:20px"><b>Hồ sơ bị từ chối</b></p>
+                        </div>
+
+                        <div class="col-6">
+                            <span style="font-size:35px" class="text-danger">@ViewBag.countUser</span>
+                        </div>
+                        <div class="col-6 text-center ">
+                            <span style="font-size:40px" class="text-secondary"><i class=" fa fa-user-circle-o"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }*@
+}
+
+
+
+
+
+
+

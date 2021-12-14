@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4b5420f93fe84ffc8e0a882b83f9fe7b" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.Config" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.DecisionCode" Width="1.5" PointX="5.25" PointY="13.25" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.DefineTypeRecord" Width="1.5" PointX="5.25" PointY="3.125" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.District" Width="1.5" PointX="3" PointY="27.125" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.GroupMedia" Width="1.5" PointX="9.75" PointY="2.625" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.GroupRecord" Width="1.5" PointX="9.75" PointY="17.625" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.Group" Width="1.5" PointX="7.5" PointY="1.5" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.Notification" Width="1.5" PointX="12.75" PointY="17.5" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.Object" Width="1.5" PointX="5.25" PointY="22.875" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.Period" Width="1.5" PointX="5.25" PointY="7.375" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.Position" Width="1.5" PointX="5.25" PointY="18.375" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.Province" Width="1.5" PointX="0.75" PointY="17.25" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.Record" Width="1.5" PointX="7.5" PointY="13.625" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.RecordUpdateHistory" Width="1.5" PointX="15" PointY="15.25" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.sysdiagram" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.User" Width="1.5" PointX="3" PointY="13.75" />
+        <EntityTypeShape EntityType="TO_QUOC_GHI_CONGModel.Village" Width="1.5" PointX="5.25" PointY="27.25" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK__DecisionC__UserC__797309D9" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Record_DecisionCode" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_DecisionCode" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Groups_DefineTypeRecord" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK__District__Provin__2A4B4B5E" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK__Ward__District_i__33D4B598" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Record_District" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Record_District1" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_District" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_District1" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_GroupMedia_Groups" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_GroupRecord_Groups1" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_GroupRecord_Record1" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_GroupRecord" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Notification_Record" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Notification_Users" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK__Objects__UserCre__7B5B524B" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Record_Objects" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Objects" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK__Period__UserCrea__7A672E12" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Record_Period" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Period" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Position_Users" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Record_Position" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Position" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Record_Province" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Record_Province1" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Province" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Province1" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Users_Province" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Record_Users" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Record_Village" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_Record_Village1" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Record" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Village" />
+        <AssociationConnector Association="TO_QUOC_GHI_CONGModel.FK_RecordUpdateHistory_Village1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,90 @@
+﻿@using Data.Utils
+@using Data.Model.APIWeb
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row mt-5 card-body" style="background-color:white;border-radius:10px">
+    <div class="col-md-4 sm-12 mt-2 ">
+        <div class="text-dark">
+            <h4><i class=" mt-1 mb-2"></i> Quận/ huyện</h4>
+        </div>
+    </div>
+    <div class="col-md-8  sm-12 text-right">
+        <button class="btn btn-outline-success mt-2" data-toggle="modal" data-target="#createDistrict"><i class="fa fa-plus"></i>Thêm mới</button>
+    </div>
+</div>
+<div class="row card-body mt-2" style="background-color:white;border-radius:10px">
+    <input class="form-control ml-1 mr-1 mt-2" placeholder="Tên quận/ huyện" style="width:20%" onchange="searchDistrict();" id="txtNameDistrict"/>
+  
+    <select class="form-control mt-2 ml-1 mr-1" style="width:15%" onchange="searchDistrict();" id="sltProvince">
+        <option value="-1">Tất cả tỉnh thành</option>
+        @{ 
+            foreach(var i in (List<ListProvince>)ViewBag.ListProvince)
+            {
+                <option value="@i.Code">@i.ProvinceName</option>
+            }
+        }
+    </select>
+    <div style="width:15%" class="  mt-2  ml-1 mr-1" >
+        <input type="text" class="form-control relative-icon-calendar date" id="txtFromDateDistrict" placeholder="Từ ngày" onchange="searchDistrict();"/>
+    </div>
+    <div style="width:15%" class="  mt-2  ml-1 mr-1">
+        <input type="text" class="form-control relative-icon-calendar date" id="txtToDateDistrict" placeholder="Đến ngày" onchange="searchDistrict();"/>
+    </div>
+
+</div>
+@*Bảng hồ sơ*@
+
+<div class="row card-body mt-2" style="background-color:white;border-radius:10px" id="tbl-district">
+    @{
+        Html.RenderAction("SearchDistrict", "District", new { page = 1, status = -1, proID = -1 });
+    }
+</div>
+
+@*modal thêm mới quận huyện*@
+<div id="createDistrict" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm mới quận huyện</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mt-2">
+                    <div class="col-3">
+                        <label>Chọn tỉnh thành</label>
+                    </div>
+                    <div class="col-6">
+                        <select class="form-control mt-2" onchange="searchDistrict();" id="sltCreateProvince">
+                            @{
+                                foreach (var i in (List<ListProvince>)ViewBag.ListProvince)
+                                {
+                                    <option value="@i.Code">@i.ProvinceName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-3 mt-2">
+                        <label>Tên quận huyện</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="txtNameDistrictCreate"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="createDistrict()"><i class="fa fa-check"></i>Lưu</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="updateDistrict">
+
+</div>

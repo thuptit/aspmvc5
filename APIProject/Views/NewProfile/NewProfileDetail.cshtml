@@ -1,0 +1,743 @@
+﻿
+@using Data.Model.APIWeb
+@using Data.DB
+@using Data.Utils
+@model NewProfileModel
+<div class="row mt-5 card-body" style="background-color:white;border-radius:10px">
+    <div class="col-md-6 sm-12 mt-2 ">
+        <div class="text-dark">
+            <h4>Chi tiết hồ sơ cấp mới</h4>
+        </div>
+    </div>
+    <div class="col-md-6  sm-12 text-right">
+        @*@{ if (Model.CerfiticateCode == null && Model.CerfiticateNumber == null) { 
+                
+                <button class="btn btn-primary mt-2" onclick="LoadNewProFile(@Model.ID);" style="width:100px;">Chỉnh sửa</button>
+            } }*@
+                <button class="btn btn-primary mt-2" onclick="LoadNewProFile(@Model.ID);" style="width:100px;">Chỉnh sửa</button>
+        
+        @*<button class="btn btn-secondary mt-2" onclick="exportPaper2()" style="width:100px;">In bằng</button>*@
+        <button class="btn btn-danger mt-2" onclick="window.location='/NewProfile/Index'" style="width:100px;">Quay lại</button>
+    </div>
+</div>
+<div class="row bg-white mt-3 mb-3">
+    <div class="col-md-12 mb-3">
+        <div class="container">
+            <div class="row mt-4">
+                <h6 class="font-weight-bold test" style="text-decoration: underline">Thông tin hồ sơ</h6>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-6">
+                                <div class="row">
+                                    <div class="col-md-4 col-4">
+                                        Số hồ sơ
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        <p>@Model.Number</p>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Họ và tên liệt sĩ
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        <p>@Model.MartyrsName</p>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Chức vụ
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        <p>@Model.PositionCode - @Model.NamePosition</p>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Đối tượng
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        <p>@Model.ObjectCode - @Model.ObjectName</p>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Nguyên quán xã, huyện
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        <p>@Model.Address</p>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Nguyên quán tỉnh
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <p>@Model.NameProvince</p>
+                                    </div>
+
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                       Sở đề nghị
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <p>@Model.ProvinceRequest</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-6">
+                                <div class="row">
+                                    <div class="col-md-4 col-4">
+                                        Thời gian hy sinh
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        <p>@Model.StrSacrificeDate</p>
+                                        @*@{
+                                            if (@Model.SacrificeDate.HasValue)
+                                            {
+                                                <p>@Model.StrSacrificeDate</p>
+                                            }
+                                            else
+                                            {
+                                                <p>Chưa cập nhật</p>
+                                            }
+                                        }*@
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Thời kỳ
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="row ml-0">
+                                            <p>@Model.PeriodCode - @Model.PeriodeName</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Ngày quyết định
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        @{
+                                            if (@Model.DecitionDate.HasValue)
+                                            {
+                                                <p>@Model.DecitionDate.Value.ToString("dd/MM/yyyy")</p>
+                                            }
+                                            else
+                                            {
+                                                <p>Chưa cập nhật</p>
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Số quyết định
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        <p>@Model.DecitionNumber/@Model.codeDecisionCode</p>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Ký hiệu bằng
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        <p>@Model.CerfiticateCode</p>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Số bằng
+                                    </div>
+                                    <div class="col-md-8 col-8 ">
+                                        <p>@Model.CerfiticateNumber</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Bảng hồ sơ*@
+<div class="row bg-white mt-3 mb-3">
+    <div class="col-md-12 mb-3">
+        <div class="container">
+            <div class="row mt-4">
+                <h6 class="font-weight-bold test" style="text-decoration: underline">Thông tin cấp bằng</h6>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-6">
+                                <div class="row">
+                                    <div class="col-md-4 col-4">
+                                        Trạng thái
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        @{
+                                            if (Model.Status == SystemParam.STATUS_PENDING_RECORD)
+                                            {
+                                                <p style="color:blue; font-weight:bold">Chờ xác nhận</p>
+                                            }
+                                            if (Model.Status == SystemParam.STATUS_ACCEPTED_RECORD)
+                                            {
+                                                <p style="color:green; font-weight:bold">Xác nhận</p>
+                                            }
+                                            if (Model.Status == SystemParam.STATUS_REJECT_RECORD)
+                                            {
+                                                <p style="color:red; font-weight:bold">Từ chối</p>
+                                            }
+                                            if (Model.Status == 3)
+                                            {
+                                                <p style="color:red; font-weight:bold">Đã trình thủ tướng</p>
+                                            }
+                                        }
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Tờ trình
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        <span>@Model.ReportNumber</span>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Ngày quyết định
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        @{
+                                            if (@Model.DecitionDate.HasValue)
+                                            {
+                                                <p>@Model.DecitionDate.Value.ToString("dd/MM/yyyy")</p>
+                                            }
+                                            else
+                                            {
+                                                <p>Chưa cập nhật</p>
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-6">
+                                <div class="row">
+                                    <div class="col-md-4 col-4">
+                                        Loại hồ sơ
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        @{
+                                            if (Model.Type == SystemParam.TYPE_NEW_PROFILE)
+                                            {
+                                                <span>Bằng cấp mới</span>
+                                            }
+
+                                            else if (Model.Type == SystemParam.TYPE_RENEW_PROFILE)
+                                            {
+                                                <span>Bằng cấp lại</span>
+                                            }
+
+                                        }
+
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Nhóm
+                                    </div>
+                                    <div class="col-md-6 col-6">
+                                        <div class="row ml-0">
+                                            <span>@Model.GroupName</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4 col-4">
+                                        Ngày cục duyệt
+                                    </div>
+                                    <div class="col-md-8 col-8">
+                                        <span>Ngày cục duyệt</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*Sửa hồ sơ*@
+<div class="modal" tabindex="-1" role="dialog" id="editprofile">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sửa hồ sơ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" class="form-control" id="hdidnewprofile" />
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label>
+                            Họ và tên liệt sĩ
+                        </label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="editnames" />
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label>
+                            Chức vụ
+                        </label>
+                    </div>
+                    <div class="col-md-8">
+                        <select id="editposition" class="chosen-select form-control" data-live-search="true" onchange="genPosition('#editposition', '#editobject')">
+
+                            @foreach (Data.DB.Position obj in (List<Data.DB.Position>)ViewBag.Position)
+                            {
+                                if (!obj.ParentID.HasValue)
+                                {
+                                    var list = (List<Data.DB.Position>)ViewBag.Position;
+                                    var listChild = list.Where(u => u.ParentID.Equals(obj.ID) && (u.IsActive == SystemParam.ACTIVE)).ToList();
+                                    if (obj.ParentID == null && listChild.Count() > 0)
+                                    {
+
+                                        <optgroup label="@obj.Name">
+                                        @*<optgroup label="@obj.Code-@obj.Name">*@
+
+                                            @{
+                                                foreach (var c in listChild)
+                                                {
+                                                    if (@c.ID == @Model.PositionID)
+                                                    {
+                                                        <option selected value="@c.ID">
+                                                            @c.Name
+                                                            @*@c.Code -@c.Name*@
+                                                        </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@c.ID">
+                                                            @c.Name
+                                                            @*@c.Code -@c.Name*@
+                                                        </option>
+                                                    }
+
+                                                }
+                                            }
+                                        </optgroup>
+                                    }
+                                    else
+                                    {
+                                        <option value="@obj.ID">
+                                            @*@obj.Code-@obj.Name*@
+                                            @obj.Name
+                                        </option>
+
+                                    }
+
+                                }
+
+                            }
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label>
+                            Đối tượng
+                        </label>
+                    </div>
+                    <div class="col-md-8">
+
+                        <select class="form-control genobject" id="editobject">
+
+                            @foreach (Data.DB.Object obj in (List<Data.DB.Object>)ViewBag.Object)
+                            {
+                                <option value="@obj.ObjectID">
+                                    @obj.Name
+                                </option>
+                            }
+
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label>
+                            Nguyên quán
+                        </label>
+                    </div>
+                    <div class="col-md-8">
+                        <select class="form-control" id="editprovince">
+                            <option value="" selected disabled>
+                                Tỉnh/ Thành phố
+                            </option>
+                            @foreach (Data.DB.Province obj in (List<Province>)ViewBag.Province)
+                            {
+                                <option value="@obj.Code">
+                                    @obj.Name
+                                </option>
+                            }
+
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+
+                    <div class="col-md-8 offset-4">
+                        <input class="form-control" name="Address" id="Address" placeholder="Nhập tên quận huyện/ thị xã" />
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    @{
+                        if (ViewBag.Role != 3)
+                        {
+                            <div class="col-md-4 col-4">
+                                Sở đề nghị:
+                            </div>
+                            <div class="col-md-8 col-8">
+                                <select class="form-control" name="ProvinceRequestID" id="ProvinceRequestID">
+                                    <option value="" >
+                                        Tỉnh/ Thành phố
+                                    </option>
+                                    @foreach (Data.DB.Province obj in (List<Province>)ViewBag.Province)
+                                    {
+                                        if (Model.ProvinceRequestID == obj.Code)
+                                        {
+                                            <option value="@obj.Code" selected>
+                                                @obj.Name
+                                            </option>
+                                        }
+                                        <option value="@obj.Code">
+                                            @obj.Name
+                                        </option>
+                                    }
+
+                                </select>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-4 col-4">
+                            </div>
+                            <div class="col-md-8 col-8">
+
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label>
+                            Thời gian hy sinh
+                        </label>
+                    </div>
+                    <div class="col-md-6 ml-3">
+                        <div class="row">
+
+                            <select class="col form-control" id="editddate" style="background-color: #f8f9fa; border: none;">
+                                <option selected value="0">
+                                    0
+                                </option>
+                                @for (int d = 1; d <= 31; d++)
+                                {
+                                    <option value="@d">
+                                        @d
+                                    </option>
+                                }
+
+                            </select>
+
+                            <select class="col form-control" id="editdmonth" style="background-color: #f8f9fa; border: none;">
+                                <option selected value="0">
+                                    0
+                                </option>
+                                @for (int m = 1; m <= 12; m++)
+                                {
+                                    <option value="@m">
+                                        @m
+                                    </option>
+                                }
+                            </select>
+
+                            @*<select class="col form-control selectpicker" style=" width: 137%;" data-live-search="true" id="editdyear" onchange="genPeriod('#editdyear','#editperiod')">*@
+                            <select class="col form-control" style="background-color: #f8f9fa; border: none;" data-live-search="true" id="editdyear" onchange="genPeriod('#editdyear','#editperiod')">
+                                <option value="0">
+                                    0
+                                </option>
+                                @for (int ye = 1925; ye <= DateTime.Now.Year; ye++)
+                                {
+                                    <option value="@ye">
+                                        @ye
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label>
+                            Thời kỳ
+                        </label>
+                    </div>
+                    <div class="col-md-8">
+                        <select class="form-control" id="editperiod">
+                            <option value="" selected disabled>
+                                Thời kỳ
+                            </option>
+                            @foreach (Data.DB.Period obj in (List<Period>)ViewBag.Period)
+                            {
+                                <option value="@obj.ID">
+                                    @obj.Name
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label>
+                            Số hồ sơ
+                        </label>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control number" type="number" name="Number" id="Number" placeholder="Số hồ sơ" value="@Model.Number" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="UpdateNewProfile();">Lưu</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    @*function editRenewProfile(ID) {
+        window.location ="/RenewProfile/EditRenewProfile?id=@Model.RenewProfileID";
+    }*@
+    @*$(document).ready(function () {
+        if (@ViewBag.Role == @SystemParam.ROLE_ADMIN) {
+            $("#saveEditRenew").removeClass("d-none");
+        }
+        else if (@ViewBag.Role == @SystemParam.ROLE_USER_DEPARTMENT) {
+            if (@Model.Status == @SystemParam.STATUS_PENDING_RECORD && (@Model.GroupStatus == null || @Model.GroupStatus == 1)) {
+                $("#saveEditRenew").removeClass("d-none");
+            }
+            if (@Model.Status == @SystemParam.STATUS_REJECT_RECORD) {
+                $("#saveEditRenew").removeClass("d-none");
+            }
+        }
+        else {}
+    });*@
+</script>
+<script>
+    $(document).ready(function () {
+        $('#editdmonth').change(function () {
+            debugger;
+            ChangDataDay();
+        });
+        $('#editdyear').change(function () {
+            debugger;
+            ChangDataDay();
+        });
+    })
+    function ChangDataDay() {
+        var year = $("#editdyear").val();
+
+        var month = $("#editdmonth").val();
+        if (month == "1" || month == "3" || month == "5" || month == "7" || month == "8" || month == "10" || month == "12") {
+            var optarray = 31;
+            $('#editddate').empty();
+            for (i = 0; i <= optarray; i++) {
+                $('#editddate').append('<option value=' + i + '>' + i + '</option>');
+            }
+        } else if (month == "4" || month == "6" || month == "9" || month == "11") {
+            var optarray = 30;
+            $('#editddate').empty();
+            for (i = 0; i <= optarray; i++) {
+                $('#editddate').append('<option value=' + i + '>' + i + '</option>');
+            }
+        } else if (month == "2" && (year % 4) == 0) {
+            var optarray = 29;
+            $('#editddate').empty();
+            for (i = 0; i <= optarray; i++) {
+                $('#editddate').append('<option [value=' + i + ']>' + i + '</option>');
+            }
+        } else if (month == "2" && (year % 4) != 0) {
+            var optarray = 28;
+            $('#editddate').empty();
+            for (i = 0; i <= optarray; i++) {
+                $('#editddate').append('<option [value=' + i + ']>' + i + '</option>');
+            }
+        }
+    }
+    function exportPaper2() {
+        var str = "";
+        //thuc hien lay ra id cua
+        $(".idNewProfile").each(function () {
+
+            if ($(this).is(":checked")) {
+                var val = $(this).val();
+                str = str + val + ",";
+            }
+        });
+        window.location = "/Export/ExportRecord?strListID=" + str;
+
+    }
+    function LoadNewProFile(ID) {
+        $.ajax({
+            url: "/NewProfile/LoadNewProfile",
+            data: { ID: ID },
+            success: async  function (rs) {
+                $("#editprofile").modal('show');
+                $("#hdidnewprofile").val(ID);
+                $("#editnames").val(rs.MartyrsName);
+                
+                if (rs.PositionID != "") {
+                    await $("#editposition").val(rs.PositionID);
+                    await $("#editposition_chosen a span").text(rs.PositionName);
+                    //await $("#editposition_chosen a span").text(rs.PositionCode + "-" + rs.PositionName);
+                }
+                else {
+                    await $("#editposition_chosen a span").text("Chức vụ");
+                }
+                $("#editobject").val(rs.ObjectID);
+                $("#editprovince").val(rs.ProvinceID);
+                $("#Address").val(rs.Address);
+                $("#editdistrict").val(rs.DistrictID);
+                $("#editvillage").val(rs.VilageID);
+                $("#editddate").val(rs.sacrifice_date);
+                $("#editdmonth").val(rs.sacrifice_month);
+                $("#editdyear").val(rs.sacrifice_year);
+                $("#editperiod").val(rs.PeriodID);
+                $("#Number").val(rs.Number);
+                //$("#editstatus").val(rs.S);
+            }
+        });
+    }
+    //Cập nhật hồ sơ
+    function UpdateNewProfile() {
+        var hdID = $("#hdidnewprofile").val();
+        var createnames = $("#editnames").val();
+        var createposition = $("#editposition").val();
+        var createobject = $("#editobject").val();
+        //var province = $("#editprovince").val();
+        //var district = $("#editdistrict").val();
+        //var village = $("#editvillage").val();
+        var Province = $("#editprovince").val();
+        var Address = $("#Address").val();
+        var ddate = $("#editddate").val();
+        var dmonth = $("#editdmonth").val();
+        var dyear = $("#editdyear").val();
+        var period = $("#editperiod").val();
+        var Number = $("#Number").val();
+        var provinceRequestID = $("#ProvinceRequestID").val();
+        //if (createnames == "") {
+        //    swal("Cảnh báo!", "Xin mời nhập tên liệt sĩ!", "warning");
+        //    return;
+        //} else if (createposition == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn chức vụ!", "warning");
+        //    return;
+        //} else if (createobject == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn đối tượng!", "warning");
+        //    return;
+        //} else if (province == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn tỉnh/ thành phố!", "warning");
+        //    return;
+        //}
+        //else if (district == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn quận huyện!", "warning");
+        //    return;
+        //}
+        //else if (village == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn phường xã!", "warning");
+        //    return;
+        //}
+        //else if (period == "") {
+        //    swal("Cảnh báo!", "Xin mời chọn thời kỳ!", "warning");
+        //    return;
+        //}
+        $.ajax({
+            url: "/NewProfile/UpdateNewProfile",
+            data: { ID: hdID, createname: createnames, createposition: createposition, createobject: createobject, province: Province, Address: Address, ddate: ddate, dmonth: dmonth, dyear: dyear, period: period, Number: Number, ProvinceRequestID: provinceRequestID },
+            success: function (rs) {
+                if (rs == 1)
+                    swal("Thành công!", "Sửa hồ sơ thành công!", "success");
+                else if (rs == 501)
+                    swal("Thất bại!", "Sửa hồ sơ thất bại!", "error");
+                $("#editprofile").modal('hide');
+                location.reload();
+            }
+        });
+    }
+    async function ListDistrict(string) {
+        var ID = $(string).val();
+        await $.ajax({
+            url: "/NewProfile/ldistrict",
+            data: { ID: ID },
+            success: function (rs) {
+                loadCombo($(".district"), rs);
+            }
+        });
+    }
+    async function ListVillage(string) {
+        var ID = $(string).val();
+        await $.ajax({
+            url: "/NewProfile/lvillage",
+            data: { ID: ID },
+            success: function (rs) {
+                loadCombo1($(".village"), rs);
+            }
+        });
+    }
+
+    function loadCombo1(combo, rs) {
+        $(combo).html("");
+        $(combo).append("<option value='' selected disabled>Phường/ xã</option>");
+        $(rs).each(function () {
+            $row = $(this)[0];
+
+            var select = "<option value='" + $row.ID + "'>" + $row.Name + "</option>";
+            $(combo).append(select);
+        });
+    }
+    function loadCombo(combo, rs) {
+        $(".village").html("");
+        $(combo).html("");
+        $(combo).append("<option value='' selected disabled>Quận/ huyện</option>");
+        $(rs).each(function () {
+            $row = $(this)[0];
+
+            var select = "<option value='" + $row.Code + "'>" + $row.Name + "</option>";
+            $(combo).append(select);
+        });
+    }
+</script>

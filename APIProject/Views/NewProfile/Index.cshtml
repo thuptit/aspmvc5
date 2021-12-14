@@ -1,0 +1,685 @@
+﻿@using Data.DB
+@using Data.Utils
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row mt-5 card-body" style="background-color:white;border-radius:10px">
+    <div class="col-md-4 sm-12 mt-2 ">
+        <div class="text-dark">
+            <h4><i class=" mt-1 mb-2"></i> Hồ sơ cấp mới</h4>
+        </div>
+    </div>
+    <div class="col-md-8  sm-12 text-right">
+        <button class="btn btn-success mt-2" id="openModalImportNewPro" onclick="$('#md-import-profile').modal('show');">Import excel</button>
+        <button class="btn btn-info mt-2" onclick="window.location = '/Export/ExportExcelTemplate'">Mẫu import</button>
+        @*<button class="btn btn-warning mt-2" onclick="window.location = '/Export/ExportGroupNewprofile'">Export word</button>*@
+        @*<button class="btn btn-secondary mt-2" onclick="exportPaper()">In bằng</button>*@
+        <button class="btn btn-primary mt-2" onclick="showAddModal();">Tạo hồ sơ mới</button>
+    </div>
+</div>
+<form>
+    <div class="row card-body mt-2 p-0" style="background-color:white;border-radius:10px">
+
+        <div class="col-md-4 col-sm-12  mt-2">
+            <input class="form-control" placeholder="Mã hồ sơ, tên liệt sĩ" id="codenameNewprofile" />
+        </div>
+        <div class="col-md-4 col-sm-12 mt-2">
+            <select class="form-control  chosen-select" multiple id="provice" title="Tỉnh/ thành phố" onchange="SearchNewProfile();">
+                <optgroup label="Tỉnh/ thành phố">
+                    <option selected value="" disabled>Tỉnh/ thành phố</option>
+                    @foreach (var province in ViewBag.Province)
+                    {
+                        <option value="@province.Code">@province.Name</option>
+                    }
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-md-4 col-sm-12 mt-2">
+            <select class="form-control chosen-select" multiple id="period" title="Thời kỳ" onchange="SearchNewProfile();">
+                <optgroup label="Thời kỳ">
+                    <option selected value="" disabled>Thời kỳ</option>
+                    @foreach (var period in ViewBag.Period)
+                    {
+                        <option value="@period.ID">@period.Code - @period.Name</option>
+                    }
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-md-4 col-sm-12 mt-2">
+            <select class="form-control chosen-select" multiple id="object" title="Đối tượng" onchange="SearchNewProfile();">
+                <optgroup label="Đối tượng">
+                    <option selected value="" disabled>Đối tượng</option>
+                    @foreach (var objects in ViewBag.Object)
+                    {
+                        <option value="@objects.ObjectID">@objects.Code - @objects.Name</option>
+                    }
+
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-md-4 col-sm-12 mt-2">
+            <select class="form-control chosen-select" multiple id="yeard" title="Năm hi sinh" onchange="SearchNewProfile();">
+                <optgroup label="Năm hi sinh">
+                    <option selected value="" disabled>Năm hi sinh</option>
+                    @for (int ye = 1925; ye < 2020; ye++)
+                    {
+                        <option value="@ye">
+                            @ye
+                        </option>
+                    }
+                </optgroup>
+
+            </select>
+        </div>
+
+        <div class="col-md-4 col-sm-12 mt-2">
+            <select class="form-control chosen-select" multiple id="yeardecision" title="Năm quyết định" onchange="SearchNewProfile();">
+                <optgroup label="Năm quyết định">
+                    <option selected value="" disabled>Năm quyết định</option>
+                    @for (int ye = 1925; ye < 2020; ye++)
+                    {
+                        <option value="@ye">
+                            @ye
+                        </option>
+                    }
+                </optgroup>
+
+            </select>
+        </div>
+        <div class="col-md-4 col-sm-12 mt-2">
+
+            <select class="form-control chosen-select" multiple id="decidioncode" title="Ký hiệu đuôi" onchange="SearchNewProfile();">
+                <optgroup label="Ký hiệu đuôi">
+                    <option selected value="" disabled>Ký hiệu đuôi</option>
+                    @foreach (var dc in ViewBag.DecisionCode)
+                    {
+                        <option value="@dc.ID">@dc.Code - @dc.Name</option>
+                    }
+                </optgroup>
+            </select>
+        </div>
+        <div class="col-md-4 col-sm-12 mt-2">
+            <select class="form-control chosen-select" multiple id="position" title="Chức vụ" onchange="SearchNewProfile();">
+                <option selected value="" disabled>Chức vụ</option>
+                @foreach (Data.DB.Position obj in (List<Data.DB.Position>)ViewBag.Position)
+                {
+                    if (!obj.ParentID.HasValue)
+                    {
+                        var list = (List<Data.DB.Position>)ViewBag.Position;
+                        var listChild = list.Where(u => u.ParentID.Equals(obj.ID) && u.IsActive.Equals(SystemParam.ACTIVE)).ToList();
+                        if (obj.ParentID == null && listChild.Count() > 0)
+                        {
+                            @*<optgroup label="@obj.Code-@obj.Name">*@
+                            <optgroup label="@obj.Name">
+
+                                @{
+                                    foreach (var c in listChild)
+                                    {
+                                        <option value="@c.ID">
+                                            @*@c.Code-@c.Name*@
+                                            @c.Name
+                                        </option>
+                                    }
+                                }
+                            </optgroup>
+                        }
+                        else
+                        {
+                            <option value="@obj.ID">
+                                @obj.Name
+                            </option>
+                        }
+                    }
+
+                }
+
+            </select>
+        </div>
+        <div class="col-md-4 col-sm-12 mt-2">
+            <select class="form-control" id="cerfiticate" title="Đã cấp bằng" onchange="SearchNewProfile();">
+                <option value="">Tất cả hồ sơ</option>
+                <option value="@SystemParam.STATUS_ACCEPTED_RECORD">Chấp nhận</option>
+                <option value="@SystemParam.STATUS_WAIT_PRESIDENT">Đã trình thủ tướng</option>
+            </select>
+        </div>
+        <div class="col-md-4 col-sm-12 mt-2">
+            <select class="form-control chosen-select" multiple id="groupprofile" title="Nhóm hồ sơ" onchange="SearchNewProfile();">
+                <optgroup label="Nhóm hồ sơ">
+                    <option selected value="" disabled>Nhóm hồ sơ</option>
+                    @foreach (var dc in ViewBag.GroupID)
+                    {
+                        <option value="@dc.ID">@dc.Name</option>
+                    }
+                </optgroup>
+            </select>
+        </div>
+    </div>
+</form>
+
+
+
+
+@*Bảng hồ sơ*@
+
+<div class="row card-body mt-2" style="background-color:white;border-radius:10px" id="_listnewprofile">
+    @{Html.RenderAction("SearchNewProfile", "NewProfile", new { page = 1 }); }
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="md-add-profile">
+    <form>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm mới hồ sơ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <label>
+                                Họ và tên liệt sĩ
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="createnames" placeholder="Nhập tên liệt sĩ" />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <label>
+                                Chức vụ
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input class="form-control positionIndex" type="text" id="createposition" value="" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <label>
+                                Đối tượng
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+
+                            <select class="form-control" id="createobject">
+                                <option value="" selected disabled>
+                                    Đối tượng
+                                </option>
+                                @foreach (Data.DB.Object obj in (List<Data.DB.Object>)ViewBag.Object)
+                                {
+                                    <option value="@obj.ObjectID">
+                                        @obj.Code
+                                    </option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <label>
+                                Nguyên quán
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input class="form-control" id="province" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-8 offset-4">
+                            <input class="form-control" name="Address" id="Address" placeholder="Nhập tên quận huyện/ thị xã" />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        @{
+                            if (ViewBag.Role != 3)
+                            {
+                                <div class="col-md-4 col-4">
+                                    Sở đề nghị:
+                                </div>
+                                <div class="col-md-8 col-8">
+                                    <input class="form-control" id="ProvinceRequestID" type="text" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-4 col-4">
+                                </div>
+                                <div class="col-md-8 col-8">
+
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <label>
+                                Thời gian hy sinh
+                            </label>
+                        </div>
+                        <div class="col-md-6 ml-3">
+                            <div class="row">
+
+                                <select class="col form-control" id="ddate" style="background-color: #f8f9fa; border: none;">
+                                    <option selected value="0">
+                                        0
+                                    </option>
+                                    @for (int d = 1; d <= 31; d++)
+                                    {
+                                        <option value="@d">
+                                            @d
+                                        </option>
+                                    }
+
+                                </select>
+
+                                <select class="col form-control" id="dmonth" style="background-color: #f8f9fa; border: none;">
+                                    <option selected value="0">
+                                        0
+                                    </option>
+                                    @for (int m = 1; m <= 12; m++)
+                                    {
+                                        <option value="@m">
+                                            @m
+                                        </option>
+                                    }
+                                </select>
+
+                                <select class="col form-control selectpicker" style=" width: 137%;" data-live-search="true" id="dyear" onchange="genPeriod('#dyear','#periodcreate')">
+                                    <option value="0">
+                                        0
+                                    </option>
+                                    @for (int ye = 1925; ye <= DateTime.Now.Year; ye++)
+                                    {
+                                        <option value="@ye">
+                                            @ye
+                                        </option>
+                                    }
+                                </select>
+                                @*//<input class="col form-control" id="dyear" type="number" maxlength="4"/>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <label>
+                                Thời kỳ
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <select class="form-control" id="periodcreate">
+                                <option value="" selected disabled>
+                                    Thời kỳ
+                                </option>
+                                @foreach (Data.DB.Period obj in (List<Period>)ViewBag.Period)
+                                {
+                                    <option value="@obj.ID">
+                                        @obj.Code
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <label>
+                                Số hồ sơ
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input class="form-control" name="Number" id="Number" placeholder="Số hồ sơ" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="CreateNewProfile();">Lưu</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="md-import-profile">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm mới hồ sơ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="uploader">
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-2">
+                            <label>
+                                Upload
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+
+                            <input id="fileInput" type="file" multiple class="btn btn-dark">
+
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-2">
+                            <label>
+                                Kết quả
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+
+                            <span class="log-message">
+
+                            </span>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Upload" id="btnUploadNewProfile" class="btn btn-primary" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$("#file_name").val("");
+        $("#createposition").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/NewProfile/lPosition",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { lable: item.Code, value: item.Name };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+
+        $("#province").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/NewProfile/lProvince",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { lable: item.Code, value: item.Name };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+        $("#ProvinceRequestID").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/NewProfile/lProvince",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { lable: item.Code, value: item.Name };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+        $("#openModalImportNewPro").on("click", function () {
+            $(".log-message").html("");
+            $("#btnUploadNewProfile").removeAttr("hidden");
+            $("#btnUploadNewProfile").attr("value", "Upload");
+        })
+        $('#dmonth').change(function () {
+            debugger;
+            ChangDataDay();
+        });
+        $('#dyear').change(function () {
+            debugger;
+            ChangDataDay();
+        });
+    })
+    function ChangDataDay() {
+        var year = $("#dyear").val();
+
+        var month = $("#dmonth").val();
+        if (month == "1" || month == "3" || month == "5" || month == "7" || month == "8" || month == "10" || month == "12") {
+            //$('#ddate option[value="31"], #ddate option[value="30"], #ddate option[value="29"]').remove();
+            //$('#ddate').append('<option value="29">29</option>');
+            //$('#ddate').append('<option value="30">30</option>');
+            //$('#ddate').append('<option value="31">31</option>');
+            var optarray = 31;
+            $('#ddate').empty();
+            for (i = 0; i <= optarray; i++) {
+                $('#ddate').append('<option value=' + i + '>' + i + '</option>');
+            }
+        } else if (month == "4" || month == "6" || month == "9" || month == "11") {
+            //$('#ddate option[value="31"], #ddate option[value="30"], #ddate option[value="29"]').remove();
+            //$('#ddate').append('<option value="29">29</option>');
+            //$('#ddate').append('<option value="30">30</option>');
+            var optarray = 30;
+            $('#ddate').empty();
+            for (i = 0; i <= optarray; i++) {
+                $('#ddate').append('<option value=' + i + '>' + i + '</option>');
+            }
+        } else if (month == "2" && (year % 4) == 0) {
+            //$('#ddate option[value="31"], #ddate option[value="30"], #ddate option[value="29"]').remove();
+            //$('#ddate').append('<option value="29">29</option>');
+            var optarray = 29;
+            $('#ddate').empty();
+            for (i = 0; i <= optarray; i++) {
+                $('#ddate').append('<option [value=' + i + ']>' + i + '</option>');
+            }
+        } else if (month == "2" && (year % 4) != 0) {
+            //$('#ddate option[value="31"], #ddate option[value="30"], #ddate option[value="29"]').remove();
+            var optarray = 28;
+            $('#ddate').empty();
+            for (i = 0; i <= optarray; i++) {
+                $('#ddate').append('<option [value=' + i + ']>' + i + '</option>');
+            }
+        }
+    }
+    function showAddModal() {
+        $("#md-add-profile").modal("show");
+        $("#createnames").val("");
+        $("#createposition_chosen a span").text("Chức vụ");
+        $("#createobject").val("");
+        $("#province").val("");
+        $("#district").val("");
+        $("#village").val("");
+        $("#ddate").val("0");
+        $("#dmonth").val("0");
+        $("#dyear").val("0");
+        $("#periodcreate").val("");
+
+    }
+    async function ListDistrict(string) {
+        var ID = $(string).val();
+        await $.ajax({
+            url: "/NewProfile/ldistrict",
+            data: { ID: ID },
+            success: function (rs) {
+                loadCombo($(".district"), rs);
+            }
+        });
+    }
+    async function ListVillage(string) {
+        var ID = $(string).val();
+        await $.ajax({
+            url: "/NewProfile/lvillage",
+            data: { ID: ID },
+            success: function (rs) {
+                loadCombo1($(".village"), rs);
+            }
+        });
+    }
+
+    function loadCombo1(combo, rs) {
+        $(combo).html("");
+        $(combo).append("<option value='' selected disabled>Phường/ xã</option>");
+        $(rs).each(function () {
+            $row = $(this)[0];
+
+            var select = "<option value='" + $row.ID + "'>" + $row.Name + "</option>";
+            $(combo).append(select);
+        });
+    }
+    function loadCombo(combo, rs) {
+        $(".village").html("");
+        $(combo).html("");
+        $(combo).append("<option value='' selected disabled>Quận/ huyện</option>");
+        $(rs).each(function () {
+            $row = $(this)[0];
+
+            var select = "<option value='" + $row.Code + "'>" + $row.Name + "</option>";
+            $(combo).append(select);
+        });
+    }
+
+    function exportPaper() {
+        var str = "";
+        //thuc hien lay ra id cua
+        $(".idNewProfile").each(function () {
+
+            if ($(this).is(":checked")) {
+                var val = $(this).val();
+                str = str + val + ",";
+            }
+        });
+        window.location = "/Export/ExportRecord?strListID=" + str;
+
+    }
+    window.onload = function () {
+        document.getElementById('uploader').onsubmit = function () {
+            var formdata = new FormData(); //FormData object
+            var fileInput = document.getElementById('fileInput');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+                //Appending each file to FormData object
+                formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            }
+            //Creating an XMLHttpRequest and sending
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/Export/UploadExcel');
+            xhr.send(formdata);
+            $("#modalLoad").modal("show");
+            xhr.onreadystatechange = function () {
+                $("#modalLoad").modal("hide");
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var data = xhr.responseText;
+                    var jsonResponse = JSON.parse(data);
+                    $("#btnUploadNewProfile").attr("hidden", "true");
+                    $(".log-message").html(jsonResponse["message"]);
+                    SearchNewProfile();
+                }
+            }
+            return false;
+        }
+    }
+    function SearchNewProfile() {
+        var codename = $("#codenameNewprofile").val();
+        var provice = "";
+        var district = "";
+        var village = "";
+        var proviceO = $("#provice").val();
+        for (p in proviceO) {
+            var a = proviceO[p].split('.');
+            provice += a[0] + ",";
+        }
+        var period = "";
+        var periodO = $("#period").val();
+        for (p in periodO) {
+            var a = periodO[p].split('.');
+            period += a[0] + ",";
+        }
+        var objectid = "";
+        var objectidO = $("#object").val();
+        for (p in objectidO) {
+            var a = objectidO[p].split('.');
+            objectid += a[0] + ",";
+        }
+        var yeard = "";
+        var yeardO = $("#yeard").val();
+        for (p in yeardO) {
+            var a = yeardO[p].split('.');
+            yeard += a[0] + ",";
+        }
+        var yeardecision = "";
+        var yeardecisionO = $("#yeardecision").val();
+        for (p in yeardecisionO) {
+            var a = yeardecisionO[p].split('.');
+            yeardecision += a[0] + ",";
+        }
+        var decidioncode = "";
+        var decidioncodeO = $("#decidioncode").val();
+        for (p in decidioncodeO) {
+            var a = decidioncodeO[p].split('.');
+            decidioncode += a[0] + ",";
+        }
+        var position = "";
+        var positionO = $("#position").val();
+        for (p in positionO) {
+            var a = positionO[p].split('.');
+            position += a[0] + ",";
+        }
+        var cerfiticate = $("#cerfiticate").val();
+        var groupprofile = "";
+        var groupprofileO = $("#groupprofile").val();
+        for (p in groupprofileO) {
+            var a = groupprofileO[p].split('.');
+            groupprofile += a[0] + ",";
+        }
+        var createdate = "";
+        $.ajax({
+            url: "/NewProfile/SearchNewProfile",
+            data: { page: 1, groupprofile: groupprofile.trim(), cerfiticate: cerfiticate, decidioncode: decidioncode.trim(), position: position.trim(), codename: codename.trim(), provice: provice.trim(), period: period.trim(), objectid: objectid.trim(), yeard: yeard.trim(), yeardecision: yeardecision.trim(), district: district.trim(), village: village.trim(), createdate: createdate },
+            success: function (rs) {
+                $("#_listnewprofile").html(rs);
+            }
+        });
+    }
+    $("#codenameNewprofile").keypress(function (e) {
+        var key = e.which;
+        if (key == 13) {
+            SearchNewProfile();
+        }
+    });
+    $("#provice_chosen").change(function () { SearchNewProfile(); })
+
+</script>

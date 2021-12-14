@@ -1,0 +1,135 @@
+﻿@using  Data.Model.APIWeb
+@using Data.Utils
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row mt-5 card-body" style="background-color:white;border-radius:10px">
+    <div class="col-md-4 sm-12 mt-2 ">
+        <div class="text-dark">
+            <h4><i class=" mt-1 mb-2"></i> Phường/ xã</h4>
+        </div>
+    </div>
+    <div class="col-md-8  sm-12 text-right">
+        <button class="btn btn-outline-success mt-2" data-toggle="modal" data-target="#createVillage"><i class="fa fa-plus"></i>Thêm mới</button>
+    </div>
+</div>
+<div class="row card-body mt-2" style="background-color:white;border-radius:10px">
+    <input class="form-control ml-1 mr-1 mt-2" placeholder="Tên phường xã" style="width:15%" id="txtNameVillage" onchange="searchVillage();"/>
+    
+    <select class="form-control mt-2 ml-1 mr-1" style="width:15%" onchange=" searchVillage();" onclick="getListDistrict();" id="sltProvinceV">
+        <option value="-1" selected >Tất cả tỉnh thành</option>
+        @{
+            foreach (var i in (List<ListProvince>)ViewBag.ListProvince)
+            {
+                <option value="@i.Code">@i.ProvinceName</option>
+            }
+        }
+    </select>
+    <div style="width:15%" class="mt-2  ml-1 mr-1" id="tblDistrictV">
+        @{
+            Html.RenderAction("GetListDistrict", "Village", new { ProvinceID = -1 });
+        }
+    </div>
+    <div style="width:15%" class=" mt-2  ml-1 mr-1">
+        <input type="text" class="form-control relative-icon-calendar date" id="txtVillageFDate" placeholder="Từ ngày" onchange="searchVillage()"/>
+    </div>
+    <div style="width:15%" class="  mt-2  ml-1 mr-1">
+        <input type="text" class="form-control relative-icon-calendar date" id="txtVillageTDate" placeholder="Đến ngày" onchange="searchVillage()"/>
+    </div>
+</div>
+@*Bảng hồ sơ*@
+
+<div class="row card-body mt-2" style="background-color:white;border-radius:10px" id="tbl-village">
+    @{
+        Html.RenderAction("SearchVillage", "Village", new { page = 1, status = -1, provinceID = -1, districtID = -1 });
+    }
+</div>
+@*modal thêm mới Phường xã*@
+<div class="modal fade" role="dialog" id="createVillage">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm mói phường xã</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mt-2">
+                    <div class="col-4 mt-2">
+                        <label>Tên tỉnh thành</label>
+                    </div>
+                    <div class="col-6">
+                        <select class="form-control " onchange="getListDistrictCreate();" id="sltCreateVillageP">
+                            <option value="-1" selected disabled>Tất cả tỉnh thành</option>
+                            @{
+                                foreach (var i in (List<ListProvince>)ViewBag.ListProvince)
+                                {
+                                    <option value="@i.Code">@i.ProvinceName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-4 mt-2">
+                        <label>Tên quận huyện</label>
+                    </div>
+                    <div class="col-6" id="tblCreateVillage">
+                        @{
+                            Html.RenderAction("GetListDistrictCreate", "Village", new { ProvinceID = -1 });
+                        }
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-4 mt-2">
+                        <label>Tên phường xã</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control" id="txtNameCreatevillage"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="createVillage()">Lưu</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="updateVillage">
+
+</div>
+
+<script>
+    function createVillage() {
+        var proID = $('#sltCreateVillageP').val();
+        var disID = $('#sltCreateDistrictV').val();
+        var name = $('#txtNameCreatevillage').val();
+        if (proID === -1 || disID == -1 || name == "") {
+            swal("Vui lòng nhập đầy đủ thông tin!", "", "warning");
+            return;
+        }
+        $.ajax({
+            url: '/Village/CreateVillage',
+            data: { proID: proID, disID: disID, name: name },
+            success: function (res) {
+                if (res == SUCCESS) {
+                    swal("Thêm mới thành công", "", "success");
+                    $("#createVillage").modal("hide");
+                    searchVillage();
+                }
+                else if (res == EXISTING) {
+                    swal("Tên này đã tồn tại!", "Vui lòng thực hiện lại", "error");
+                }
+                else {
+                    swal("Có lỗi xảy ra!", "Vui lòng thử lại", "warning");
+                }
+            }
+        });
+
+    }
+</script>
